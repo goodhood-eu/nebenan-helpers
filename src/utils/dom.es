@@ -1,5 +1,3 @@
-import { stringify } from 'querystring';
-import omit from 'lodash/omit';
 import { capitalizeFirst } from './formatters';
 
 const STYLES_PREFIXES = {
@@ -8,7 +6,6 @@ const STYLES_PREFIXES = {
 
 const QUOTE_REGEX = /'/;
 const QUOTE_ESCAPE = escape('\'');
-const HTTP_REGEX = /^https?:\/\//;
 
 export const getPrefixed = (styles) => {
   const result = { ...styles };
@@ -31,10 +28,16 @@ export const media = {
   mediaL: '(min-width: 920px)',
 };
 
-export const getMedia = (node, media) => node.matchMedia(media).matches;
+export const getMedia = (node, query) => node.matchMedia(query).matches;
 
 export const offset = (node) => {
-  if (!node) return { top: 0, left: 0 };
+  if (!node) {
+    return {
+      top: 0,
+      left: 0,
+    };
+  }
+
   const { offsetParent } = node;
 
   const offsetTop = offsetParent ? offsetParent.offsetTop : 0;
@@ -42,7 +45,7 @@ export const offset = (node) => {
 
   return {
     top: node.offsetTop + offsetTop,
-    left:  node.offsetLeft + offsetLeft,
+    left: node.offsetLeft + offsetLeft,
   };
 };
 
@@ -58,7 +61,7 @@ export const documentOffset = (documentContainer, node) => {
   return {
     left: Math.round(left + pageXOffset),
     top: Math.round(top + pageYOffset),
-  }
+  };
 };
 
 export const position = (node) => ({
@@ -70,13 +73,13 @@ export const screenPosition = (node) => node.getBoundingClientRect();
 
 export const size = (node) => ({
   width: node.offsetWidth,
-  height:  node.offsetHeight,
+  height: node.offsetHeight,
 });
 
 export const screenSize = (node) => ({
   width: node.document.documentElement.clientWidth,
   height: node.document.documentElement.clientHeight,
-})
+});
 
 export const preloadImage = (Loader, url, done) => {
   const image = new Loader();
@@ -94,7 +97,7 @@ export const stopEvent = (event) => {
   event.stopPropagation();
 };
 
-export const eventCoordinates = (event, args...) => {
+export const eventCoordinates = (event, ...args) => {
   const prop = event.touches ? event.touches[0] : event;
   return args.reduce((acc, name) => {
     acc[name] = prop[name];
@@ -103,18 +106,12 @@ export const eventCoordinates = (event, args...) => {
 };
 
 export const escapeDomUrl = (url) => url.replace(QUOTE_REGEX, QUOTE_ESCAPE);
-export const getBackgroundImageStyle = (url, options) => {
-  if (typeof url !== 'string') return null;
-  let result = url;
-  if (HTTP_REGEX.test(url)) result = getImageProxyUrl(result, options);
-  return { backgroundImage: `url(\"${escapeDomUrl(result)}\")` };
-};
 
 export const scroll = (node) => {
   const get = () => node.pageYOffset || node.scrollTop || 0;
-  const to = (position = 0) => {
-    if (node.scroll) node.scroll(0, position);
-    else node.scrollTop = position;
+  const to = (pos = 0) => {
+    if (node.scroll) node.scroll(0, pos);
+    else node.scrollTop = pos;
   };
 
   const lock = () => node.addEventListener('touchmove', preventDefault);

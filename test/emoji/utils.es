@@ -21,7 +21,7 @@ import {
   hexToImage,
 } from '../../src//emoji/utils';
 
-import { emoji, tone, mixed, specialSpacer, specialEnder, arrow } from '../../../scaffolding/emojis';
+import { emoji, tone, mixed, specialSpacer, specialEnder, arrow } from '../../scaffolding/emojis';
 
 
 describe('modules/emoji/utils', () => {

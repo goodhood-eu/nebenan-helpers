@@ -23,7 +23,7 @@ export const isSameCollection = (source, target) => {
 };
 
 export const arrayToHash = (array, selector) => array.reduce((acc, item) => {
-  key = selector ? item[selector] : item;
+  const key = selector ? item[selector] : item;
   acc[key] = true;
   return acc;
 }, {});
@@ -38,11 +38,11 @@ export const arrayToChunks = (array, count) => {
   if (count === 1) return [array.slice()];
 
   const chunks = [];
-  const length = array.length
-  const size = Math.ceil(length / count)
+  const length = array.length;
+  const size = Math.ceil(length / count);
   let step = 0;
 
-  for (let i = 0, i <= count, i += 1) {
+  for (let i = 0; i <= count; i += 1) {
     chunks.push(array.slice(step, step + size));
     step += size;
   }
@@ -52,14 +52,14 @@ export const arrayToChunks = (array, count) => {
 
 export const setField = (obj, keypath, value) => {
   let field = obj;
-  const keypath = keypath.split('.');
+  const keypathArray = keypath.split('.');
 
-  while (keypath.length > 1) {
-    if (!field[keypath.shift()]) field[keypath.shift()] = {};
-    field = field[keypath.shift()];
+  while (keypathArray.length > 1) {
+    if (!field[keypathArray.shift()]) field[keypathArray.shift()] = {};
+    field = field[keypathArray.shift()];
   }
 
-  field[keypath[0]] = value;
+  field[keypathArray[0]] = value;
   return obj;
 };
 
@@ -69,7 +69,7 @@ export const isModelEmpty = (model, skip) => {
 
   for (const key of Object.keys(model)) {
     if (skipHash && skipHash[key]) continue;
-    if model[key] return false;
+    if (model[key]) return false;
   }
 
   return true;
@@ -80,9 +80,9 @@ export const reverse = (arr) => arr.slice().reverse();
 export const gatherArrays = (object, fields) => {
   if (!object || !fields) return [];
   return fields.reduce(((acc, field) => acc.concat(object[field])), []);
-}
+};
 
-export const has = (args...) => Object.prototype.hasOwnProperty.call(args...);
+export const has = (...args) => Object.prototype.hasOwnProperty.call(...args);
 
 export const hashToArray = (hash) => Object.keys(hash).reduce((acc, key) => {
   if (hash[key]) acc.push(key);
@@ -101,8 +101,8 @@ export const formatQuery = (object) => {
 
   return Object.keys(object).reduce((acc, key) => {
     const value = object[key];
-    if (Array.isArray(value)) acc[key] = value.join(',')
+    if (Array.isArray(value)) acc[key] = value.join(',');
     else if (typeof value !== 'object') acc[key] = value;
     return acc;
   }, {});
-}
+};

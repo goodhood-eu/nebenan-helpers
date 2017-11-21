@@ -11,46 +11,46 @@ const isDOMAvailable = process.browser;
 
 const settingsMap = {};
 const eventMap = {};
-const noop = () => ();
+const noop = () => {};
 const defaultSettings = {};
 
 
 const createEventSettings = () => {
   settingsMap.resize = {
     emitter: global,
-    wrapper: (callback) -> debounce(callback, RESIZE_RATE),
+    wrapper(callback) { return debounce(callback, RESIZE_RATE); },
   };
 
   settingsMap.scroll = {
     emitter: global,
-    wrapper: (callback) -> throttle(callback, SCROLL_RATE),
+    wrapper(callback) { return throttle(callback, SCROLL_RATE); },
   };
 
-  defaultSettings = { emitter: global.document };
+  defaultSettings.emitter = global.document;
 };
 
 // ========================================================================================
 // Utility functions
 // ========================================================================================
-getEventData = (event) => {
+const getEventData = (event) => {
   if (!eventMap[event]) eventMap[event] = { listeners: {}, lastIndex: 0, listenersLength: 0 };
   return eventMap[event];
-}
+};
 
-getEventSettings = (event) => settingsMap[event] || defaultSettings;
+const getEventSettings = (event) => settingsMap[event] || defaultSettings;
 
-handleEmitterEvent = (event) => {
+const handleEmitterEvent = (event) => {
   const eventData = getEventData(event.type);
   Object.keys(eventData.listeners).forEach((id) => eventData.listeners[id](event));
 };
 
-attachEmitterHandler = (event, eventData, eventSettings) => {
+const attachEmitterHandler = (event, eventData, eventSettings) => {
   if (eventData.listenersLength === 1) {
     eventSettings.emitter.addEventListener(event, handleEmitterEvent);
   }
 };
 
-detachEmitterHandler = (event, eventData, eventSettings) => {
+const detachEmitterHandler = (event, eventData, eventSettings) => {
   if (eventData.listenersLength === 0) {
     eventSettings.emitter.removeEventListener(event, handleEmitterEvent);
   }
@@ -59,7 +59,7 @@ detachEmitterHandler = (event, eventData, eventSettings) => {
 // ========================================================================================
 // Public api
 // ========================================================================================
-removeListener = (event, id) => {
+const removeListener = (event, id) => {
   const eventData = getEventData(event);
   const eventSettings = getEventSettings(event);
   // protect from being called twice
@@ -69,7 +69,7 @@ removeListener = (event, id) => {
   eventData.listenersLength -= 1;
 
   detachEmitterHandler(event, eventData, eventSettings);
-}
+};
 
 export const addListener = (event, callback) => {
   if (typeof event !== 'string') throw new Error('Event name required');
@@ -79,11 +79,11 @@ export const addListener = (event, callback) => {
   const eventData = getEventData(event);
   const eventSettings = getEventSettings(event);
 
-  eventData.lastIndex += 1
+  eventData.lastIndex += 1;
   const id = eventData.lastIndex;
-  const handler = eventSettings.wrapper ? eventSettings.wrapper(callback) || callback;
+  const handler = eventSettings.wrapper ? eventSettings.wrapper(callback) : callback;
 
-  eventData.listeners[id] = handler
+  eventData.listeners[id] = handler;
   eventData.listenersLength += 1;
 
   attachEmitterHandler(event, eventData, eventSettings);
@@ -91,4 +91,4 @@ export const addListener = (event, callback) => {
   return () => removeListener(event, id);
 };
 
-if (isDOMAvailable) return createEventSettings();
+if (isDOMAvailable) createEventSettings();

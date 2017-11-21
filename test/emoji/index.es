@@ -13,7 +13,7 @@ import {
   shortnameRegex,
 } from '../../src//emoji';
 
-import { emoji, tone, mixed, specialSpacer, specialEnder } from '../../../scaffolding/emojis';
+import { emoji, tone, mixed, specialSpacer, specialEnder } from '../../scaffolding/emojis';
 
 
 describe('modules/emoji', () => {

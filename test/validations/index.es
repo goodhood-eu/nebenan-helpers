@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import validations = from '../../src//validations';
+import validations from '../../src//validations';
 
 const lorem = `
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
@@ -17,7 +17,7 @@ describe('modules/validations', () => {
       true,
       0,
       'string',
-      [ '0' ],
+      ['0'],
       { a: 0 },
     ];
 
@@ -56,7 +56,7 @@ describe('modules/validations', () => {
       'a@example.com',
       'a+b@example.com',
       'a.b+c@example.com',
-      'a_b.c+d@example.com'
+      'a_b.c+d@example.com',
     ];
 
     const falsy = [
@@ -65,8 +65,8 @@ describe('modules/validations', () => {
       'a@b',
     ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isEmail(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isEmail(item), "Failed for #{item}"));
+    truthy.forEach((item) => assert.isTrue(validations.isEmail(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isEmail(item), `Failed for ${item}`));
   });
 
   it('isPhone', () => {
@@ -81,17 +81,17 @@ describe('modules/validations', () => {
       '033-123',
       '+1 23.4(5)6-7',
       '+49', // prob should be falsy lol
-    ]
+    ];
 
     const falsy = [
       '0',
       '()',
       '+22()._123',
       '030-3030-30303-4567812312312312321312312345678123123123123213123123456781231231231232131231234567812312312312321312312345678123123123123213123123456781231231231232131231234567812312312312321312312345678123123123123213123123',
-    ]
+    ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isPhone(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isPhone(item), "Failed for #{item}"));
+    truthy.forEach((item) => assert.isTrue(validations.isPhone(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isPhone(item), `Failed for ${item}`));
   });
 
   it('isInt', () => {
@@ -110,7 +110,7 @@ describe('modules/validations', () => {
       true,
       0,
       'string',
-      [ '0' ],
+      ['0'],
       { a: 0 },
 
       false,
@@ -120,14 +120,14 @@ describe('modules/validations', () => {
       {},
     ];
 
-    items.forEach((item) => assert.isTrue(validations.isEqual(item, item), "Failed for #{item}"));
-    items.forEach((item) => assert.isFalse(validations.isEqual(item, PILE_OF_POO), "Failed for #{item}"));
+    items.forEach((item) => assert.isTrue(validations.isEqual(item, item), `Failed for ${item}`));
+    items.forEach((item) => assert.isFalse(validations.isEqual(item, PILE_OF_POO), `Failed for ${item}`));
   });
 
   it('isOneOf', () => {
-    const items = [1, 2, 3]
-    assert.isTrue(validations.isOneOf(1, items..., 'Value in array check'));
-    assert.isFalse(validations.isOneOf(4, items..., 'Value not in array check'));
+    const items = [1, 2, 3];
+    assert.isTrue(validations.isOneOf(1, ...items, 'Value in array check'));
+    assert.isFalse(validations.isOneOf(4, ...items, 'Value not in array check'));
   });
 
   it('isPassword', () => {
@@ -161,16 +161,16 @@ describe('modules/validations', () => {
       'a.example.com @,a@b',
     ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isEmailList(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isEmailList(item), "Failed for #{item}"));
+    truthy.forEach((item) => assert.isTrue(validations.isEmailList(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isEmailList(item), `Failed for ${item}`));
   });
 
   it('isDate', () => {
-    truthy = [
+    const truthy = [
       '07/09/1885',
     ];
 
-    falsy = [
+    const falsy = [
       null,
       '15.15.15',
       '07.99.1885',
@@ -179,16 +179,16 @@ describe('modules/validations', () => {
       '123.45.6789',
     ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isDate(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isDate(item), "Failed for #{item}"));
+    truthy.forEach((item) => assert.isTrue(validations.isDate(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isDate(item), `Failed for ${item}`));
   });
 
   it('isZipCode', () => {
-    truthy = [
+    const truthy = [
       '12312',
     ];
 
-    falsy = [
+    const falsy = [
       'asldknalsd',
       'penis',
       '1123',
@@ -198,8 +198,8 @@ describe('modules/validations', () => {
       '12312-1234',
     ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isZipCode(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isZipCode(item), "Failed for #{item}"));
+    truthy.forEach((item) => assert.isTrue(validations.isZipCode(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isZipCode(item), `Failed for ${item}`));
   });
 
   it('isName', () => {
@@ -221,7 +221,7 @@ describe('modules/validations', () => {
       '1/2=3',
     ];
 
-    truthy.forEach((item) => assert.isTrue(validations.isName(item), "Passed for #{item}"));
-    falsy.forEach((item) => assert.isFalse(validations.isName(item), "Failed for #{item}"));
-  })
-})
+    truthy.forEach((item) => assert.isTrue(validations.isName(item), `Passed for ${item}`));
+    falsy.forEach((item) => assert.isFalse(validations.isName(item), `Failed for ${item}`));
+  });
+});

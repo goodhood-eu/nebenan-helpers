@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const formatNumber = (number, digits = 2) => {
-  const padding = `${Math.pow(10, digits)}`.slice(1);
+  const padding = `${10 ** digits}`.slice(1);
   let numberString = String(number);
 
   if (numberString.length >= digits) return numberString.slice(0, digits);
@@ -61,7 +61,7 @@ export const formatDatesRange = (date1, time1, date2, time2) => {
 export const formatNumerMax = (number, limit = 99) => {
   if (typeof number !== 'number') return null;
   if (number > limit) return `${limit}+`;
-  else return number.toString();
-}
+  return number.toString();
+};
 
 export const capitalizeFirst = (string = '') => string.charAt(0).toUpperCase() + string.slice(1);

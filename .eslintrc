@@ -12,6 +12,7 @@
       "WithStatement",
       "YieldExpression"
     ],
+    "no-control-regex": "off",
     "space-before-function-paren": ["error", "never"],
     "global-require": "off",
     "default-case": "off",

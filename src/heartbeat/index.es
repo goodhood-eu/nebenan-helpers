@@ -1,27 +1,24 @@
-const HEARTBEAT_INTERVAL = 1000 * 10 // 10sec
+const HEARTBEAT_INTERVAL = 1000 * 10; // 10sec
 
 const isAlive = process.browser;
 
 const listeners = {};
-let listenersLength = 0;
 let lastIndex = 0;
 let heartbeatTid = null;
 
 const removeListener = (id) => {
   if (!listeners[id]) return;
   delete listeners[id];
-  listenersLength -= 1;
 };
 
 export const addListener = (interval, callback) => {
   if (typeof callback !== 'function') throw new Error('Listener function required');
-  lastIndex += 1
+  lastIndex += 1;
 
   const id = lastIndex;
   const called = Date.now();
 
   listeners[id] = { interval, callback, called };
-  listenersLength += 1;
 
   return () => removeListener(id);
 };
@@ -35,7 +32,7 @@ const heartbeatLoop = () => {
       item.callback();
       item.called = now;
     }
-  })
+  });
 
   heartbeatTid = setTimeout(heartbeatLoop, HEARTBEAT_INTERVAL);
 };

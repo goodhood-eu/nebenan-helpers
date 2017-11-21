@@ -1,7 +1,8 @@
 import punycode from 'punycode';
-SHORTENED_STRING_TOKEN = '…';
 
-const punctuationRegex = /[\s\:\.,!\?"';\-–\(\)\[\]…]+$/;
+const punctuationRegex = /[\s:.,!?"';\-–()[\]…]+$/;
+
+export const SHORTENED_STRING_TOKEN = '…';
 
 export const unicodeLength = (string) => {
   if (!string || typeof string !== 'string') return 0;

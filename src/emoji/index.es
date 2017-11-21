@@ -1,5 +1,5 @@
 
-import { collection, emojiRegex, shortnameRegex } from '../../../vendor/emojis';
+import { collection, emojiRegex, shortnameRegex } from '../../vendor/emojis';
 import {
   getOptions,
   sanitize,

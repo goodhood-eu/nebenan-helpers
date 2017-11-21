@@ -55,7 +55,3 @@ describe 'modules/utils/strings', ->
 
     assert.equal(shortenString(emoji, 20), expectedEmoji, 'trims ZWJ')
     assert.equal(shortenString(emoji2, 6), expectedEmoji2, 'doesn\'t cut off variation selector')
-
-  it 'isStringMatched', ->
-    assert.isTrue(isStringMatched('tool', [/^tool$/, /^asdasd/]), 'matched at least one regex')
-    assert.isFalse(isStringMatched('tool', [/^toasd$/, /^asdasd/]), 'no matches were found')
