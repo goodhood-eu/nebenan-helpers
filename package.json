@@ -14,7 +14,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./lib/ || exit 1",
-    "prepublishOnly": "npm run clean && babel src --out-dir lib --copy-files",
+    "prepublishOnly": "npm run clean && NODE_ENV=production babel src --out-dir lib --copy-files",
     "emojigen": "node run.js emojigen > ./vendor/emojis.json",
     "lint": "eslint --ext .es,.js ./",
     "lint:tofile": "eslint --ext .es,.js --no-color -o ./eslint-report.log ./",
