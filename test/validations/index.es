@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import validations = from '../lib/validations';
+import validations = from '../../src//validations';
 
 const lorem = `
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt

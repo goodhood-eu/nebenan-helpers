@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import users from '../../../scaffolding/users';
-import { TAGS_SKILLS, TAGS_INTERESTS } from '../lib/constants/tags';
+import { TAGS_SKILLS, TAGS_INTERESTS } from '../../src//constants/tags';
 
 import {
   isEmptyArrayFields,
@@ -15,7 +15,7 @@ import {
   isSurroundingsVisible,
   isDisabledSurroundings,
   getTagsHash,
-} from '../lib/utils/profile';
+} from '../../src//utils/profile';
 
 
 const filledTags = {};

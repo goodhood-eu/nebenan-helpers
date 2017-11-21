@@ -16,7 +16,7 @@ config = require('uni-config')
   concatItems
   arrayOf
   formatQuery
-} = require('../lib/utils/data')
+} = require('../../src//utils/data')
 
 
 describe 'modules/utils/data', ->

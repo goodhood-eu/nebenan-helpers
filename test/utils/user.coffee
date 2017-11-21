@@ -1,5 +1,5 @@
 { assert } = require('chai')
-{ ACHIEVEMENT_BEN } = require('../lib/constants/enum')
+{ ACHIEVEMENT_BEN } = require('../../src//constants/enum')
 
 {
   getPicturePlaceholder
@@ -7,7 +7,7 @@
   getShortName
   formatBirthday
   isActiveUser
-} = require('../lib/utils/user')
+} = require('../../src//utils/user')
 
 
 describe 'modules/utils/user', ->

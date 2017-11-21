@@ -16,7 +16,7 @@ config = require('uni-config')
   getLogoClass
   getSnakedLocale
   invoke
-} = require('../lib/utils/misc')
+} = require('../../src//utils/misc')
 
 
 describe 'modules/utils/misc', ->

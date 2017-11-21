@@ -13,7 +13,7 @@ import {
   proxyMatch,
   safeContent,
   emptyShorten,
-} from '../lib/smartcontent/utils';
+} from '../../src//smartcontent/utils';
 
 const fullUrl = 'http://github.com';
 const safeUrl = 'https://google.com';

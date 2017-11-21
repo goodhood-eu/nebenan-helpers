@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import normalize from '../lib/smartcontent/normalize';
+import normalize from '../../src//smartcontent/normalize';
 
 describe('modules/smartcontent/normalize', () => {
   it('normalize - newlines', () => {

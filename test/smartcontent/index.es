@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import createParser from '../lib/smartcontent';
-import { unicodeLength } from '../lib/utils/strings';
+import createParser from '../../src//smartcontent';
+import { unicodeLength } from '../../src//utils/strings';
 
 let process = null;
 

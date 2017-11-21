@@ -19,7 +19,7 @@ import {
 
   hexToId,
   hexToImage,
-} from '../lib/emoji/utils';
+} from '../../src//emoji/utils';
 
 import { emoji, tone, mixed, specialSpacer, specialEnder, arrow } from '../../../scaffolding/emojis';
 

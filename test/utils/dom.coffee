@@ -1,7 +1,7 @@
 config = require('uni-config')
 { assert } = require('chai')
 { stringify } = require('querystring')
-utils = require('../lib/utils/dom')
+utils = require('../../src//utils/dom')
 
 
 describe 'modules/utils/dom', ->
