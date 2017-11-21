@@ -24,14 +24,6 @@ nvm/
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules/*
 
-!.source/*.zip
-!public/files/*.zip
-
-build/.browserify-cache*.json
-
-vendor/fontello/*
-!vendor/fontello/nebenan-codes.css
-
 # Users Environment Variables
 .lock-wscript
 .idea
@@ -40,12 +32,5 @@ vendor/fontello/*
 # MacOS bullshit
 .DS_Store
 
-# Local config
-config/local.*
-
-# Generated static stuff
-public/assets/*.*
-public/*.gz
-public/*.html
-
-.compiled
+# Compiled files
+lib/
