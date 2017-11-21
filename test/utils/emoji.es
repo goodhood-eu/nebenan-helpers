@@ -2,7 +2,7 @@ import { assert } from 'chai';
 
 import {
   isSingleEmoji,
-} from '../../src//utils/emoji';
+} from '../../src/utils/emoji';
 
 
 describe('modules/utils/emoji', () => {

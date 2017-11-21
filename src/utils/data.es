@@ -35,14 +35,14 @@ export const arrayToObject = (array, keyField = 'id') => array.reduce((acc, item
 
 export const arrayToChunks = (array, count) => {
   if (!array || !count) return [];
-  if (count === 1) return [array.slice()];
+  if (count === 1) return [[...array]];
 
   const chunks = [];
   const length = array.length;
   const size = Math.ceil(length / count);
   let step = 0;
 
-  for (let i = 0; i <= count; i += 1) {
+  for (let i = 0; i < count; i += 1) {
     chunks.push(array.slice(step, step + size));
     step += size;
   }
@@ -52,14 +52,15 @@ export const arrayToChunks = (array, count) => {
 
 export const setField = (obj, keypath, value) => {
   let field = obj;
-  const keypathArray = keypath.split('.');
+  const array = keypath.split('.');
 
-  while (keypathArray.length > 1) {
-    if (!field[keypathArray.shift()]) field[keypathArray.shift()] = {};
-    field = field[keypathArray.shift()];
+  while (array.length > 1) {
+    const key = array.shift();
+    if (!field[key]) field[key] = {};
+    field = field[key];
   }
 
-  field[keypathArray[0]] = value;
+  field[array[0]] = value;
   return obj;
 };
 

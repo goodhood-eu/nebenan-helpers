@@ -1,5 +1,5 @@
 { assert } = require('chai')
-utils = require('../../src//utils/formatters')
+utils = require('../../src/utils/formatters')
 
 dateObj = new Date(2011, 10, 11, 11, 11)
 dateString = '11/11/2011'

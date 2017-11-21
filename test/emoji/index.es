@@ -11,7 +11,7 @@ import {
   emojiCollection,
   emojiRegex,
   shortnameRegex,
-} from '../../src//emoji';
+} from '../../src/emoji';
 
 import { emoji, tone, mixed, specialSpacer, specialEnder } from '../../scaffolding/emojis';
 

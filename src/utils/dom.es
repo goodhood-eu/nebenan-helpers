@@ -19,7 +19,7 @@ export const getPrefixed = (styles) => {
     });
   }
 
-  return styles;
+  return result;
 };
 
 export const media = {

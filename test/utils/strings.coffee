@@ -4,8 +4,8 @@
   unicodeLength
   shortenString
   isStringMatched
-} = require('../../src//utils/strings')
-{ SHORTENED_STRING_TOKEN } = require('../../src//constants/misc')
+  SHORTENED_STRING_TOKEN
+} = require('../../src/utils/strings')
 
 UNICODE = '💩'
 

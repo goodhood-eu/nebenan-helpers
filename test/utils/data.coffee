@@ -1,4 +1,3 @@
-config = require('uni-config')
 { assert } = require('chai')
 
 {
@@ -16,7 +15,7 @@ config = require('uni-config')
   concatItems
   arrayOf
   formatQuery
-} = require('../../src//utils/data')
+} = require('../../src/utils/data')
 
 
 describe 'modules/utils/data', ->
