@@ -1,2 +1,8 @@
 !lib/
+scaffolding/
 src/
+tasks/
+test/
+.*
+require_hooks.js
+run.js
