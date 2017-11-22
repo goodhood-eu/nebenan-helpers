@@ -71,7 +71,7 @@ const removeListener = (event, id) => {
   detachEmitterHandler(event, eventData, eventSettings);
 };
 
-export const addListener = (event, callback) => {
+const addListener = (event, callback) => {
   if (typeof event !== 'string') throw new Error('Event name required');
   if (typeof callback !== 'function') throw new Error('Listener function required');
   if (!isDOMAvailable) return noop;
@@ -92,3 +92,5 @@ export const addListener = (event, callback) => {
 };
 
 if (isDOMAvailable) createEventSettings();
+
+export default addListener;

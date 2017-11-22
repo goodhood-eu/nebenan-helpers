@@ -11,7 +11,7 @@ const removeListener = (id) => {
   delete listeners[id];
 };
 
-export const addListener = (interval, callback) => {
+const addListener = (interval, callback) => {
   if (typeof callback !== 'function') throw new Error('Listener function required');
   lastIndex += 1;
 
@@ -48,3 +48,5 @@ if (isAlive) {
   heartbeatLoop();
   document.addEventListener('visibilitychange', handleVisibilityChanged);
 }
+
+export default addListener;
