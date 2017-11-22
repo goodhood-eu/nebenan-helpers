@@ -7,7 +7,7 @@
   "homepage": "https://nebenan.de/",
   "repository": "good-hood-gmbh/ui-component-helpers",
   "bugs": "https://github.com/good-hood-gmbh/ui-component-helpers/issues",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "engines": {
     "node": "^8.x.x"
   },
