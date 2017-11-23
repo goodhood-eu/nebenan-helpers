@@ -1,8 +1,9 @@
 !lib/
 scaffolding/
-src/
 tasks/
 test/
-.*
+.eslintrc
+.eslintignore
+.gitignore
 require_hooks.js
 run.js

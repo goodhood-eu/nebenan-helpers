@@ -1,4 +1,4 @@
-ui-component-helpers
+nebenan-helpers
 ====================
 
 A library of React UI component helpers
