@@ -1,4 +1,4 @@
-import { keys as keyMap } from '../constants/keys';
+import * as keyMap from '../constants/keys';
 
 const isDOMAvailable = process.browser;
 const normalizeKey = (key) => key.toUpperCase();
