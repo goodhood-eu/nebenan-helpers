@@ -1,4 +1,4 @@
-import { capitalizeFirst } from './formatters';
+import { capitalizeFirst } from '../formatters';
 
 const STYLES_PREFIXES = {
   transform: ['Webkit', 'ms'],

@@ -1,9 +1,8 @@
 !lib/
-scaffolding/
-tasks/
+src/
 test/
-.eslintrc
+.babelrc
 .eslintignore
+.eslintrc
 .gitignore
-require_hooks.js
-run.js
+.npmignore
