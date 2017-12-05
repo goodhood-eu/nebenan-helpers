@@ -29,7 +29,7 @@ node_modules/*
 .idea
 .scripts
 
-# MacOS bullshit
+# MacOS
 .DS_Store
 
 # Compiled files

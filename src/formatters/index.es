@@ -58,7 +58,7 @@ export const formatDatesRange = (date1, time1, date2, time2) => {
   return `${_humanizeDateTime(date1, humanTime1)} – ${humanTime2}`;
 };
 
-export const formatNumerMax = (number, limit = 99) => {
+export const formatNumberMax = (number, limit = 99) => {
   if (typeof number !== 'number') return null;
   if (number > limit) return `${limit}+`;
   return number.toString();
