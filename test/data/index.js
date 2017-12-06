@@ -11,10 +11,12 @@ const {
   isModelEmpty,
   reverse,
   gatherArrays,
+  has,
   hashToArray,
   concatItems,
   arrayOf,
   formatQuery,
+  ceilToFixed,
 } = require('../../lib/data');
 
 
@@ -182,6 +184,17 @@ describe('data', () => {
     assert.deepEqual(gatherArrays(obj, null), [], 'return empty array if field are not specified');
   });
 
+  it('has', () => {
+    const Klass = function() { this.a = true; };
+    Klass.prototype.c = true;
+    const test = new Klass();
+
+    assert.isFalse(has({}, 'a'), 'empty object');
+    assert.isTrue(has({ b: undefined }, 'b'), 'own undefined prop');
+    assert.isTrue(has(test, 'a'), 'own prop');
+    assert.isFalse(has(test, 'c'), 'prototype');
+  });
+
   it('hashToArray', () => {
     const hash = {
       a: true,
@@ -236,5 +249,13 @@ describe('data', () => {
 
     assert.isNull(formatQuery(), 'empty ok');
     assert.deepEqual(formatQuery(queryObj), expected, 'works correctly');
+  });
+
+  it('ceilToFixed', () => {
+    assert.equal(ceilToFixed(5), 5, 'doesn\'t change integers');
+    assert.equal(ceilToFixed(5.111), 5.12, 'correct defaults');
+    assert.equal(ceilToFixed(5.1, 0), 6, 'converts to int');
+    assert.equal(ceilToFixed(5.11111111111, 6), 5.111112, 'converts to fixed correctly');
+    assert.equal(ceilToFixed(5.123, 6), 5.123, 'doesn\'t change float when not needed');
   });
 });

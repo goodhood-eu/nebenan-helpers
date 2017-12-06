@@ -107,3 +107,8 @@ export const formatQuery = (object) => {
     return acc;
   }, {});
 };
+
+export const ceilToFixed = (float, digits = 2) => {
+  const fx = 10 ** digits;
+  return Math.ceil(float * fx) / fx;
+};
