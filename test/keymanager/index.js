@@ -48,8 +48,8 @@ describe('keymanager', () => {
     handler({ keyCode: ENTER });
     handler({ keyCode: 80085 });
 
-    assert.isTrue(spy.calledOnce, 'caled once for correct event');
-    assert.isTrue(spy2.calledOnce, 'caled once for correct event 2');
+    assert.isTrue(spy.calledOnce, 'called once for correct event');
+    assert.isTrue(spy2.calledOnce, 'called once for correct event 2');
 
     unsubscribe();
     unsubscribe2();
