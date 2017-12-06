@@ -14,6 +14,25 @@ describe('dom', () => {
     assert.equal(result.msTransform, result.transform, 'sets prefixed styles');
   });
 
+  it('offset', () => {
+    const node1 = {
+      offsetTop: 10,
+      offsetLeft: 10,
+    };
+    const node2 = {
+      offsetTop: 10,
+      offsetLeft: 10,
+      offsetParent: {
+        offsetTop: 10,
+        offsetLeft: 10,
+      },
+    };
+
+    assert.deepEqual(utils.offset(), { top: 0, left: 0 }, 'empty call');
+    assert.deepEqual(utils.offset(node1), { top: 10, left: 10 }, 'without parent');
+    assert.deepEqual(utils.offset(node2), { top: 20, left: 20 }, 'with parent');
+  });
+
   it('eventCoordinates', () => {
     const pageX = 123;
     const eventTouch = { touches: [{ pageX }] };
