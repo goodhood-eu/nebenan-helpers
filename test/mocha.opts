@@ -1,4 +1,4 @@
---globals document
+--globals document,addEventListener,removeEventListener
 --check-leaks
 --recursive
 --ui bdd

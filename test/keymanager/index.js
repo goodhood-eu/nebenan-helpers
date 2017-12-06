@@ -47,11 +47,26 @@ describe('keymanager', () => {
     handler({ keyCode: ESC });
     handler({ keyCode: ENTER });
     handler({ keyCode: 80085 });
+    unsubscribe();
+    unsubscribe2();
+
+    handler({ keyCode: ESC });
+    handler({ keyCode: ENTER });
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
     assert.isTrue(spy2.calledOnce, 'called once for correct event 2');
+  });
 
+  it('multiple unsubscribes', () => {
+    const spy = sinon.spy();
+    const unsubscribe = keymanager('esc', spy);
+
+    handler({ keyCode: ESC });
     unsubscribe();
-    unsubscribe2();
+    unsubscribe();
+    unsubscribe();
+    handler({ keyCode: ESC });
+
+    assert.isTrue(spy.calledOnce, 'called once for correct event');
   });
 });

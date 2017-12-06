@@ -58,13 +58,14 @@ describe('heartbeat', () => {
     const cancel2 = heartbeat(ONE_BEAT * 1000, spy2);
 
     clock.tick(ONE_BEAT * 10);
+    cancel();
+
+    clock.tick(ONE_BEAT * 100);
+    cancel2();
 
     assert.isTrue(spy.called, 'called at least once');
     assert.equal(spy.callCount, 10, 'called exactly 10 times');
     assert.isTrue(spy2.notCalled, 'called only once');
-
-    cancel();
-    cancel2();
   });
 
   it('stops when window is not focused', () => {
@@ -85,5 +86,18 @@ describe('heartbeat', () => {
     assert.equal(spy.callCount, 20, 'called exactly 20 times');
 
     cancel();
+  });
+
+  it('multiple unsubscribes', () => {
+    const spy = sinon.spy();
+    const cancel = heartbeat(1, spy);
+
+    clock.tick(ONE_BEAT);
+    cancel();
+    cancel();
+    cancel();
+    clock.tick(ONE_BEAT * 10);
+
+    assert.isTrue(spy.calledOnce, 'called once');
   });
 });
