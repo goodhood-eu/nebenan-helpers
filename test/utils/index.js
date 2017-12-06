@@ -1,12 +1,20 @@
 const { assert } = require('chai');
 
 const {
+  isPathActive,
   escapeFileName,
   invoke,
 } = require('../../lib/utils');
 
 
 describe('utils', () => {
+  it('isPathActive', () => {
+    assert.isTrue(isPathActive('/hey', '/hey'), 'match the same routes');
+    assert.isTrue(isPathActive('/hey', '/hey/man'), 'match children route');
+    assert.isFalse(isPathActive('/hey', '/heyyy/man'), 'do not match children with different root route');
+    assert.isFalse(isPathActive('/hey', '/chao'), 'do not match different routes');
+  });
+
   it('escapeFileName', () => {
     const file = 'cap\'n penis.jpg';
     const escaped = 'cap_n penis.jpg';
