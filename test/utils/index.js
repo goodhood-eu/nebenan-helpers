@@ -1,4 +1,5 @@
 const { assert } = require('chai');
+const sinon = require('sinon');
 
 const {
   isPathActive,
@@ -31,8 +32,11 @@ describe('utils', () => {
   });
 
   it('invoke', () => {
-    const args = (first, second) => second;
+    const func = (first, second) => second;
+    const spy = sinon.spy();
+    invoke(spy);
     assert.isUndefined(invoke(), 'empty call does nothing');
-    assert.equal(invoke(args, 'a', 'b'), 'b', 'passes down args properly');
+    assert.isTrue(spy.calledOnce, 'called');
+    assert.equal(invoke(func, 'a', 'b'), 'b', 'passes down args properly');
   });
 });

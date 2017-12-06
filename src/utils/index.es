@@ -5,7 +5,7 @@ export const isPathActive = (path, fullPath) => {
   const fullPathChunks = fullPath.split('/');
 
   fullPathChunks.length = pathChunks.length;
-  return path.join('/') === fullPathChunks.join('/');
+  return pathChunks.join('/') === fullPathChunks.join('/');
 };
 
 export const escapeFileName = (filename) => filename.replace(unsafeFileCharsRegex, '_');

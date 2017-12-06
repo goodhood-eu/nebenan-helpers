@@ -89,7 +89,6 @@ export const preloadImage = (Loader, url, done) => {
 };
 
 export const preventDefault = (event) => event.preventDefault();
-
 export const stopPropagation = (event) => event.stopPropagation();
 
 export const stopEvent = (event) => {
