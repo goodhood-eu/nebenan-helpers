@@ -17,8 +17,8 @@
     "prepublishOnly": "npm run clean && npm run build:babel",
     "lint": "eslint --ext .es,.js ./",
     "lint:tofile": "eslint --ext .es,.js --no-color -o ./eslint-report.log ./",
-    "test": "npm run build:babel && env TZ='Europe/Berlin' mocha \"test/**/*.{js,coffee,es}\"",
-    "test:tofile": "npm run build:babel && mocha --no-colors -R spec \"test/**/*.{js,coffee,es}\" 2>&1 | tee test-report.log"
+    "test": "npm run build:babel && env TZ='Europe/Berlin' mocha \"test/**/*.js\"",
+    "test:tofile": "npm run build:babel && mocha --no-colors -R spec \"test/**/*.js\" 2>&1 | tee test-report.log"
   },
   "devDependencies": {
     "lodash": "^4.17.4",
