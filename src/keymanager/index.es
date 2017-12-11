@@ -1,4 +1,16 @@
-import * as keyMap from '../constants/keys';
+const keyMap = {
+  ESC: 27,
+  ENTER: 13,
+  SPACE: 32,
+  BACKSPACE: 8,
+
+  DOWN: 40,
+  RIGHT: 39,
+  TAB: 9,
+
+  UP: 38,
+  LEFT: 37,
+};
 
 const isDOMAvailable = process.browser;
 const normalizeKey = (key) => key.toUpperCase();
@@ -44,4 +56,5 @@ const handleKeyDown = (event) => {
 const attachHandlers = () => document.addEventListener('keydown', handleKeyDown);
 if (isDOMAvailable) attachHandlers();
 
+export { keyMap as keys };
 export default addListener;

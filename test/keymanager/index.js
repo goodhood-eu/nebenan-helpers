@@ -1,17 +1,19 @@
 const { assert } = require('chai');
 const sinon = require('sinon');
 const proxyquire = require('proxyquire').noPreserveCache();
-const { ESC, ENTER } = require('../../lib/constants/keys');
 
 let keymanager;
 let handler;
+let keys;
 
 describe('keymanager', () => {
   beforeEach(() => {
     process.browser = true;
     global.document = {};
     global.document.addEventListener = sinon.spy((event, callback) => { handler = callback; });
-    keymanager = proxyquire('../../lib/keymanager', {}).default;
+    const res = proxyquire('../../lib/keymanager', {});
+    keys = res.keys;
+    keymanager = res.default;
   });
 
   after(() => {
@@ -44,14 +46,14 @@ describe('keymanager', () => {
     const unsubscribe = keymanager('esc', spy);
     const unsubscribe2 = keymanager('enter', spy2);
 
-    handler({ keyCode: ESC });
-    handler({ keyCode: ENTER });
+    handler({ keyCode: keys.ESC });
+    handler({ keyCode: keys.ENTER });
     handler({ keyCode: 80085 });
     unsubscribe();
     unsubscribe2();
 
-    handler({ keyCode: ESC });
-    handler({ keyCode: ENTER });
+    handler({ keyCode: keys.ESC });
+    handler({ keyCode: keys.ENTER });
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
     assert.isTrue(spy2.calledOnce, 'called once for correct event 2');
@@ -61,11 +63,11 @@ describe('keymanager', () => {
     const spy = sinon.spy();
     const unsubscribe = keymanager('esc', spy);
 
-    handler({ keyCode: ESC });
+    handler({ keyCode: keys.ESC });
     unsubscribe();
     unsubscribe();
     unsubscribe();
-    handler({ keyCode: ESC });
+    handler({ keyCode: keys.ESC });
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
   });
