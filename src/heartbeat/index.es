@@ -28,7 +28,8 @@ const heartbeatLoop = () => {
 
   Object.keys(listeners).forEach((id) => {
     const item = listeners[id];
-    if (now - item.called > item.interval) {
+    // Item may have been deleted during iteration cycle
+    if (item && (now - item.called > item.interval)) {
       item.callback();
       item.called = now;
     }

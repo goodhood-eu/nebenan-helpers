@@ -92,4 +92,16 @@ describe('eventproxy', () => {
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
   });
+
+  it('listener unsubscribes another listener', () => {
+    let unsubscribe;
+    const spy = sinon.spy(() => unsubscribe && unsubscribe());
+
+    unsubscribe = eventproxy('test', spy);
+    unsubscribe = eventproxy('test', spy);
+
+    handler({ type: 'test' });
+
+    assert.isTrue(spy.calledOnce, 'call count correct');
+  });
 });

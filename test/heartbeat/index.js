@@ -100,4 +100,16 @@ describe('heartbeat', () => {
 
     assert.isTrue(spy.calledOnce, 'called once');
   });
+
+  it('listener unsubscribes another listener', () => {
+    let unsubscribe;
+    const spy = sinon.spy(() => unsubscribe && unsubscribe());
+
+    unsubscribe = heartbeat(1, spy);
+    unsubscribe = heartbeat(1, spy);
+
+    clock.tick(ONE_BEAT);
+
+    assert.isTrue(spy.calledOnce, 'call count correct');
+  });
 });

@@ -1,5 +1,6 @@
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
+import { invoke } from '../utils';
 
 const RESIZE_RATE = 300;
 const SCROLL_RATE = 100;
@@ -41,7 +42,8 @@ const getEventSettings = (event) => settingsMap[event] || defaultSettings;
 
 const handleEmitterEvent = (event) => {
   const eventData = getEventData(event.type);
-  Object.keys(eventData.listeners).forEach((id) => eventData.listeners[id](event));
+  // Item may have been deleted during iteration cycle
+  Object.keys(eventData.listeners).forEach((id) => invoke(eventData.listeners[id], event));
 };
 
 const attachEmitterHandler = (event, eventData, eventSettings) => {
