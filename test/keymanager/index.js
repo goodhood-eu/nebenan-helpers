@@ -71,4 +71,16 @@ describe('keymanager', () => {
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
   });
+
+  it('listener unsubscribes another listener', () => {
+    let unsubscribe;
+    const spy = sinon.spy(() => unsubscribe && unsubscribe());
+
+    unsubscribe = keymanager('esc', spy);
+    unsubscribe = keymanager('esc', spy);
+
+    handler({ keyCode: keys.ESC });
+
+    assert.isTrue(spy.calledOnce, 'call count correct');
+  });
 });
