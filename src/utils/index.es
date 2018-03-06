@@ -12,3 +12,7 @@ export const escapeFileName = (filename) => filename.replace(unsafeFileCharsRege
 export const invoke = (fn, ...args) => {
   if (typeof fn === 'function') return fn(...args);
 };
+
+export const bindTo = (context, ...funcs) => funcs.forEach((func) => {
+  if (context[func]) context[func] = context[func].bind(context);
+});

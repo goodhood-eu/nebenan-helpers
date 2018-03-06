@@ -5,6 +5,7 @@ const {
   isPathActive,
   escapeFileName,
   invoke,
+  bindTo,
 } = require('../../lib/utils');
 
 
@@ -38,5 +39,20 @@ describe('utils', () => {
     assert.isUndefined(invoke(), 'empty call does nothing');
     assert.isTrue(spy.calledOnce, 'called');
     assert.equal(invoke(func, 'a', 'b'), 'b', 'passes down args properly');
+  });
+
+  it('bindTo', () => {
+    const obj = {
+      handler() { return this; },
+      anotherHandler() { return this; },
+    };
+
+    bindTo(obj, 'handler', 'anotherHandler', 'unexistend');
+
+    const result1 = obj.handler();
+    const result2 = obj.anotherHandler();
+
+    assert.deepEqual(result1, obj, 'bound 1st func');
+    assert.deepEqual(result2, obj, 'bound 2nd func');
   });
 });
