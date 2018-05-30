@@ -1,4 +1,4 @@
-import moment from 'moment';
+import formatDate from 'date-fns/format';
 
 export const formatNumber = (number, digits = 2) => {
   const padding = `${10 ** digits}`.slice(1);
@@ -10,52 +10,30 @@ export const formatNumber = (number, digits = 2) => {
   return numberString.slice(numberString.length - digits);
 };
 
-// Formats date to YMD instead of Date to avoid timezone issues
-export const formatDate = (string) => {
-  if (!string) return null;
-  return moment(string, 'L').format('YYYY-MM-DD');
+const getDateTime = (item, options, locale) => {
+  const date = formatDate(item.date, options.dateFormat, { locale });
+  return item.time ? `${date}, ${formatDate(item.time, options.timeFormat, { locale })}` : date;
 };
 
-export const formatDateTime = (date, time) => {
-  if (!date || !time) return null;
-  return moment(`${date} ${time}`, 'L LT').toJSON();
-};
+export const formatDatesRange = (dates, options = {}, locale) => {
+  if (!Array.isArray(dates)) return null;
+  const { dateFormat, timeFormat } = options;
 
-// Creates a Date to update time with TZ data
-export const humanizeDate = (string) => {
-  if (!string) return null;
-  return moment(string).format('L');
-};
+  if (!dates[0].date) return null;
+  if (!dates[1].date) return getDateTime(dates[0], options, locale);
 
-// Creates a Date to update time with TZ data
-export const humanizeTime = (string) => {
-  if (!string) return null;
-  return moment(string).format('LT');
-};
-
-const _humanizeDateTime = (date, time) => {
-  let humanDate = humanizeDate(date);
-  if (time) humanDate += `, ${time}`;
-  return humanDate;
-};
-
-export const formatDatesRange = (date1, time1, date2, time2) => {
-  const humanTime1 = humanizeTime(time1);
-  const humanTime2 = humanizeTime(time2);
-  const fullResult = `${_humanizeDateTime(date1, humanTime1)} – ${_humanizeDateTime(date2, humanTime2)}`;
-
-  if (!date1) return null;
-  if (!date2) return _humanizeDateTime(date1, humanTime1);
-
-  if (date1 !== date2) return fullResult;
+  const fullResult = dates.map((item) => getDateTime(item, options, locale)).join(' – ');
+  if (dates[0].date !== dates[1].date) return fullResult;
 
   // same dates below
-  if (!humanTime1 && !humanTime2) return humanizeDate(date1);
-  if (!humanTime1) return fullResult;
-  if (!humanTime2) return `${_humanizeDateTime(date1, humanTime1)} – ${humanizeDate(date1)}`;
+  const humanDate1 = formatDate(dates[0].date, dateFormat, { locale });
+  if (!dates[0].time && !dates[1].time) return humanDate1;
+  if (!dates[0].time) return fullResult;
+  if (!dates[1].time) return `${getDateTime(dates[0], options, locale)} – ${humanDate1}`;
 
   // times differ
-  return `${_humanizeDateTime(date1, humanTime1)} – ${humanTime2}`;
+  const humanTime2 = formatDate(dates[1].time, timeFormat, { locale });
+  return `${getDateTime(dates[0], options, locale)} – ${humanTime2}`;
 };
 
 export const formatNumberMax = (number, limit = 99) => {
