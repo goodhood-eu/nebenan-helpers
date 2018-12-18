@@ -5,6 +5,7 @@ const {
   isPathActive,
   escapeFileName,
   invoke,
+  invokeOn,
   bindTo,
 } = require('../../lib/utils');
 
@@ -39,6 +40,18 @@ describe('utils', () => {
     assert.isUndefined(invoke(), 'empty call does nothing');
     assert.isTrue(spy.calledOnce, 'called');
     assert.equal(invoke(func, 'a', 'b'), 'b', 'passes down args properly');
+  });
+
+  it('invokeOn', () => {
+    const func = (first, second) => second;
+    const spy = sinon.spy();
+    const that = 'that';
+    invokeOn(that, spy);
+    assert.isUndefined(invokeOn(), 'empty call does nothing');
+    assert.isUndefined(invokeOn(that), 'call with only context does nothing');
+    assert.isTrue(spy.calledOnce, 'called');
+    assert.isTrue(spy.calledOn(that), 'called with correct context');
+    assert.equal(invokeOn(that, func, 'a', 'b'), 'b', 'passes down args properly');
   });
 
   it('bindTo', () => {
