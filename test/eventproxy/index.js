@@ -13,7 +13,7 @@ describe('eventproxy', () => {
     global.document.removeEventListener = sinon.spy();
     global.addEventListener = sinon.spy((event, callback) => { handler = callback; });
     global.removeEventListener = sinon.spy();
-    eventproxy = proxyquire('../../lib/eventproxy', {}).default;
+    eventproxy = proxyquire('../../lib/eventproxy', {});
   });
 
   after(() => {
@@ -26,7 +26,7 @@ describe('eventproxy', () => {
   it('server safe', () => {
     delete process.browser;
     global.document.addEventListener = sinon.spy();
-    const servereventproxy = require('../../lib/eventproxy').default;
+    const servereventproxy = require('../../lib/eventproxy');
     const spy = sinon.spy();
 
     const unsubscribe = servereventproxy('diceroll', spy);

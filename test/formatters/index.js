@@ -27,7 +27,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016, 2:00 AM – 08/03/2016, 3:00 AM';
+    const expected = '08/02/2016, 0:00 AM – 08/03/2016, 1:00 AM';
     const result = utils.formatDatesRange(dates, options);
     assert.equal(result, expected, 'correct dates formatting');
   });
@@ -43,7 +43,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016 – 08/03/2016, 3:00 AM';
+    const expected = '08/02/2016 – 08/03/2016, 1:00 AM';
     const result = utils.formatDatesRange(dates, options);
 
     assert.equal(result, expected, 'correct dates formatting');
@@ -60,7 +60,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016, 2:00 AM – 08/03/2016';
+    const expected = '08/02/2016, 0:00 AM – 08/03/2016';
     const result = utils.formatDatesRange(dates, options);
 
     assert.equal(result, expected, 'correct dates formatting');
@@ -94,7 +94,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016, 2:00 AM – 3:00 AM';
+    const expected = '08/02/2016, 0:00 AM – 1:00 AM';
     const result = utils.formatDatesRange(dates, options);
 
     assert.equal(result, expected, 'correct dates formatting');
@@ -111,7 +111,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016 – 08/02/2016, 3:00 AM';
+    const expected = '08/02/2016 – 08/02/2016, 1:00 AM';
     const result = utils.formatDatesRange(dates, options);
 
     assert.equal(result, expected, 'correct dates formatting');
@@ -129,7 +129,7 @@ describe('formatters', () => {
       },
     ];
 
-    const expected = '08/02/2016, 2:00 AM – 08/02/2016';
+    const expected = '08/02/2016, 0:00 AM – 08/02/2016';
     const result = utils.formatDatesRange(dates, options);
 
     assert.equal(result, expected, 'correct dates formatting');

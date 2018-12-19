@@ -14,7 +14,7 @@ describe('heartbeat', () => {
     global.document = {};
     global.document.addEventListener = sinon.spy((event, callback) => { handler = callback; });
 
-    heartbeat = proxyquire('../../lib/heartbeat', {}).default;
+    heartbeat = proxyquire('../../lib/heartbeat', {});
   });
 
   before(() => {
@@ -32,7 +32,7 @@ describe('heartbeat', () => {
   it('server safe', () => {
     delete process.browser;
     global.document.addEventListener = sinon.spy();
-    const serverheartbeat = require('../../lib/heartbeat').default;
+    const serverheartbeat = require('../../lib/heartbeat');
 
     const spy = sinon.spy();
     const cancel = serverheartbeat(1, spy);
