@@ -7,7 +7,7 @@
   "homepage": "https://nebenan.de/",
   "repository": "good-hood-gmbh/nebenan-helpers",
   "bugs": "https://github.com/good-hood-gmbh/nebenan-helpers/issues",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "engines": {
     "node": "^10.x.x"
   },
