@@ -36,10 +36,4 @@ export const formatDatesRange = (dates, options = {}, locale) => {
   return `${getDateTime(dates[0], options, locale)} – ${humanTime2}`;
 };
 
-export const formatNumberMax = (number, limit = 99) => {
-  if (typeof number !== 'number') return null;
-  if (number > limit) return `${limit}+`;
-  return number.toString();
-};
-
 export const capitalizeFirst = (string = '') => string.charAt(0).toUpperCase() + string.slice(1);

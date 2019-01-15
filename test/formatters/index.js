@@ -153,15 +153,6 @@ describe('formatters', () => {
     assert.equal(result, expected, 'correct dates formatting');
   });
 
-  it('formatNumberMax', () => {
-    assert.isNull(utils.formatNumberMax(), 'empty safe');
-    assert.isString(utils.formatNumberMax(0), 'correct type');
-    assert.equal(utils.formatNumberMax(2), '2', 'correct output');
-    assert.equal(utils.formatNumberMax(101), '99+', 'default max');
-    assert.equal(utils.formatNumberMax(101, 200), '101', 'custom max');
-    assert.equal(utils.formatNumberMax(999, 200), '200+', 'custom max overflow');
-  });
-
   it('capitalizeFirst', () => {
     assert.isString(utils.capitalizeFirst(), 'empty safe');
     assert.isString(utils.capitalizeFirst(''), 'empty string safe');
