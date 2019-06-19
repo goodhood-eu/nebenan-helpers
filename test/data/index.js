@@ -17,6 +17,7 @@ const {
   arrayOf,
   formatQuery,
   ceilToFixed,
+  roundFloat,
 } = require('../../lib/data');
 
 
@@ -257,5 +258,15 @@ describe('data', () => {
     assert.equal(ceilToFixed(5.1, 0), 6, 'converts to int');
     assert.equal(ceilToFixed(5.11111111111, 6), 5.111112, 'converts to fixed correctly');
     assert.equal(ceilToFixed(5.123, 6), 5.123, 'doesn\'t change float when not needed');
+  });
+
+  it('roundFloat', () => {
+    assert.isNumber(roundFloat(23), 'correct type');
+    assert.equal(roundFloat(23), 23, 'integers intact');
+    assert.equal(roundFloat(.23), .23, 'ok float intact');
+    assert.equal(roundFloat(.230000000000), .23, 'cuts off empty zeroes');
+    assert.equal(roundFloat(.2300000000001), .23, 'rounds down');
+    assert.equal(roundFloat(.2300000000009), .23, 'rounds down when far behind zeroes');
+    assert.equal(roundFloat(.1 + .2), .3, 'the .1 + .2 test');
   });
 });
