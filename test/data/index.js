@@ -159,7 +159,7 @@ describe('data', () => {
       bitch: undefined,
     };
 
-    const modelWithExtraFields = Object.assign({ milk: 'drink', gun: 'shoot' }, model);
+    const modelWithExtraFields = { milk: 'drink', gun: 'shoot', ...model };
 
     assert.isFalse(isModelEmpty(filledModel), 'has at least one filled field');
     assert.isTrue(isModelEmpty(model), 'only empty fields');
