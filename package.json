@@ -37,7 +37,6 @@
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "glob": "^7.1.4",
     "lodash": "^4.17.15",
     "mocha": "^6.2.0",
     "proxyquire": "^2.1.3",
