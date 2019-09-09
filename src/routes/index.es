@@ -35,3 +35,7 @@ export const getPage = (location) => parseInt(getQuery(location).page, 10) || 1;
 export const setReferrer = (pathname, referrer) => (
   `${pathname}${getSearch({ referrer }, pathname.includes('?') ? '&' : '?')}`
 );
+
+export const stripOriginFromUrl = (url = '', origin = '') => (
+  url.replace(new RegExp(`^${origin}`, 'i'), '')
+);

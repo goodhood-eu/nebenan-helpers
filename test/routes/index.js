@@ -9,6 +9,8 @@ const {
   getSearch,
   getPage,
   setReferrer,
+
+  stripOriginFromUrl,
 } = require('../../lib/routes');
 
 
@@ -100,5 +102,16 @@ describe('routes', () => {
   it('setReferrer', () => {
     assert.equal(setReferrer('/route', 'test'), '/route?referrer=test', 'set referrer to simple route');
     assert.equal(setReferrer('/route?a=23', 'test'), '/route?a=23&referrer=test', 'set referrer to route with params');
+  });
+
+  it('stripOriginFromUrl', () => {
+    assert.equal(stripOriginFromUrl(), '', 'empty call');
+    assert.equal(stripOriginFromUrl('/my/great/path'), '/my/great/path', 'no origin set');
+    assert.equal(stripOriginFromUrl('https://example.com/my/great/path', 'https://example.com'), '/my/great/path', 'cleans up simple route properly');
+    assert.equal(stripOriginFromUrl('https://example.com/my/great/path?referrer=https://example.com', 'https://example.com'), '/my/great/path?referrer=https://example.com', 'only removes beginning of the string');
+    assert.equal(stripOriginFromUrl('https://somethingelse.com/my/great/path?referrer=https://example.com', 'https://example.com'), 'https://somethingelse.com/my/great/path?referrer=https://example.com', 'only removes beginning of the string - different origin');
+    assert.equal(stripOriginFromUrl('https://somethingelse.com/my/great/path', 'https://example.com'), 'https://somethingelse.com/my/great/path', 'different origin');
+    assert.equal(stripOriginFromUrl('/my/great/path?referrer=https://example.com', 'https://example.com'), '/my/great/path?referrer=https://example.com', 'only removes beginning of the string - no origin');
+    assert.equal(stripOriginFromUrl('/my/great/path', 'https://example.com'), '/my/great/path', 'already a path - does nothing');
   });
 });
