@@ -1,4 +1,6 @@
-import formatDate from 'date-fns/format';
+import formatDateParsed from 'date-fns/format';
+import parseDate from 'date-fns/parseISO';
+
 
 export const formatNumber = (number, digits = 2) => {
   const padding = `${10 ** digits}`.slice(1);
@@ -9,6 +11,8 @@ export const formatNumber = (number, digits = 2) => {
   numberString = `${padding}${numberString}`;
   return numberString.slice(numberString.length - digits);
 };
+
+export const formatDate = (date, ...args) => formatDateParsed(parseDate(date), ...args);
 
 const getDateTime = (item, options, locale) => {
   const date = formatDate(item.date, options.dateFormat, { locale });
