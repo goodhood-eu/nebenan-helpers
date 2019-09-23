@@ -1,28 +1,26 @@
 import memoize from 'lodash/memoize';
 import { stringify, parse } from 'qs';
 
-const REGEX_INT = '\\d+';
-const REGEX_SLUG = '[\\w-]+';
+
+const PARAM_TOKEN = /(:\w+)\[(\w+)\]/g;
 
 export const validations = {
-  id: REGEX_INT,
-  hoodId: REGEX_INT,
+  id: '\\d+',
   zipCode: '\\d{5}',
   token: '[\\w-]{20}',
   accessCode: '[\\w]{5}-[\\w]{5}',
-  slug: REGEX_SLUG,
-  hood: REGEX_SLUG,
+  slug: '[\\w-]+',
   stringId: '\\w{6,}',
 };
 
-export const getParamReplacer = (regexMap) => memoize((fragment, param) => {
-  const regex = regexMap[param];
-  return regex ? `${fragment}(${regex})` : fragment;
+export const getParamReplacer = (typesValidation) => memoize((fragment, param, type) => {
+  const regex = typesValidation[type];
+  return regex ? `${param}(${regex})` : fragment;
 });
 
 export const getValidatedPath = (path, override) => {
   const getReplacement = getParamReplacer({ ...validations, ...override });
-  return path.replace(/:(\w+)/g, getReplacement);
+  return path.replace(PARAM_TOKEN, getReplacement);
 };
 
 export const getQuery = ({ search }) => parse(search.substr(1));

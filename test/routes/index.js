@@ -62,22 +62,23 @@ describe('routes', () => {
       id: '\\d+',
     });
 
-    const result = getReplacement(':id', 'id');
+    const result = getReplacement(':itemId[id]', ':itemId', 'id');
 
-    assert.isTrue(/^:id(.+)$/.test(result), 'param replaced correctly');
-    assert.equal(getReplacement(':id', 'id'), result, 'repeated params replacements work');
+    assert.isTrue(/^:itemId(.+)$/.test(result), 'param replaced correctly');
+    assert.equal(getReplacement(':itemId[id]', ':itemId', 'id'), result, 'repeated params replacements work');
 
-    assert.equal(getReplacement(':unknown', 'unknown'), ':unknown', 'unknown params passed through');
-    assert.equal(getReplacement(':unknown', 'unknown'), ':unknown', 'repeated unknown calls work');
+    assert.equal(getReplacement(':unknown[customType]', ':unknown', 'customType'), ':unknown[customType]', 'unknown param type passed through');
+    assert.equal(getReplacement(':unknown[customType]', ':unknown', 'customType'), ':unknown[customType]', 'repeated unknown calls work');
   });
 
   it('getValidatedPath', () => {
-    assert.isTrue(/^\/test\/:id(.+)$/.test(getValidatedPath('/test/:id')), 'param replaced correctly');
-    assert.isTrue(/^\/test\/:id(.+)?$/.test(getValidatedPath('/test/:id?')), 'optional param replaced correctly');
-    assert.isTrue(/^\/test\/:id(.+)*$/.test(getValidatedPath('/test/:id*')), 'repeated param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId[id]')), 'param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)?$/.test(getValidatedPath('/test/:itemId[id]?')), 'optional param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)*$/.test(getValidatedPath('/test/:itemId[id]*')), 'repeated param replaced correctly');
 
     assert.equal(getValidatedPath('/no/params'), '/no/params', 'paths without params work ok');
-    assert.equal(getValidatedPath('/no/:param'), '/no/:param', 'unknown params passed through');
+    assert.equal(getValidatedPath('/no/:param'), '/no/:param', 'paths without types check work ok');
+    assert.equal(getValidatedPath('/no/:param[customType]'), '/no/:param[customType]', 'unknown params type passed through');
   });
 
   it('getQuery', () => {
