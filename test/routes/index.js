@@ -64,7 +64,7 @@ describe('routes', () => {
 
     const result = getReplacement(':itemId[id]', ':itemId', 'id');
 
-    assert.isTrue(/^:itemId(.+)$/.test(result), 'param replaced correctly');
+    assert.equal(result, ':itemId(\\d+)', 'param replaced correctly');
     assert.equal(getReplacement(':itemId[id]', ':itemId', 'id'), result, 'repeated params replacements work');
 
     assert.equal(getReplacement(':unknown[customType]', ':unknown', 'customType'), ':unknown[customType]', 'unknown param type passed through');
