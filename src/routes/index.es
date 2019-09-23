@@ -15,15 +15,14 @@ export const validations = {
   stringId: '\\w{6,}',
 };
 
-export const getParamReplacement = (customValidations = {}) => memoize((fragment, param) => {
-  const regex = validations[param] || customValidations[param];
-  if (!regex) return fragment;
-  return `${fragment}(${regex})`;
+export const getParamReplacer = (regexMap) => memoize((fragment, param) => {
+  const regex = regexMap[param];
+  return regex ? `${fragment}(${regex})` : fragment;
 });
 
-export const getValidatedPath = (path, customValidations) => {
-  const paramReplacement = getParamReplacement(customValidations);
-  path.replace(/:(\w+)/g, paramReplacement);
+export const getValidatedPath = (path, override) => {
+  const getReplacement = getParamReplacer({ ...validations, ...override });
+  return path.replace(/:(\w+)/g, getReplacement);
 };
 
 export const getQuery = ({ search }) => parse(search.substr(1));

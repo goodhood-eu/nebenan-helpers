@@ -2,7 +2,7 @@ const { assert } = require('chai');
 
 const {
   validations,
-  getParamReplacement,
+  getParamReplacer,
   getValidatedPath,
 
   getQuery,
@@ -57,17 +57,21 @@ describe('routes', () => {
     isNotAccessCode.forEach((item) => assert.isFalse(getTest(validations.accessCode)(item), `Failed for ${item}`));
   });
 
-  it('getParamReplacement', () => {
-    const result = getParamReplacement(':id', 'id');
+  it('getParamReplacer', () => {
+    const getReplacement = getParamReplacer({
+      id: '\\d+',
+    });
+
+    const result = getReplacement(':id', 'id');
 
     assert.isTrue(/^:id(.+)$/.test(result), 'param replaced correctly');
-    assert.equal(getParamReplacement(':id', 'id'), result, 'repeated params replacements work');
+    assert.equal(getReplacement(':id', 'id'), result, 'repeated params replacements work');
 
-    assert.equal(getParamReplacement(':unknown', 'unknown'), ':unknown', 'unknown params passed through');
-    assert.equal(getParamReplacement(':unknown', 'unknown'), ':unknown', 'repeated unknown calls work');
+    assert.equal(getReplacement(':unknown', 'unknown'), ':unknown', 'unknown params passed through');
+    assert.equal(getReplacement(':unknown', 'unknown'), ':unknown', 'repeated unknown calls work');
   });
 
-  it('getParamReplacement', () => {
+  it('getValidatedPath', () => {
     assert.isTrue(/^\/test\/:id(.+)$/.test(getValidatedPath('/test/:id')), 'param replaced correctly');
     assert.isTrue(/^\/test\/:id(.+)?$/.test(getValidatedPath('/test/:id?')), 'optional param replaced correctly');
     assert.isTrue(/^\/test\/:id(.+)*$/.test(getValidatedPath('/test/:id*')), 'repeated param replaced correctly');
