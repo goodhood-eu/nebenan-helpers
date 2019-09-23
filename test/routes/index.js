@@ -80,8 +80,8 @@ describe('routes', () => {
     assert.equal(getValidatedPath('/no/:param'), '/no/:param', 'paths without types check work ok');
     assert.equal(getValidatedPath('/no/:param[customType]'), '/no/:param[customType]', 'params with unknown type passed through');
 
-    const customResultA = getValidatedPath('/custom/:param[customType]', { customType: 'kimchin' });
-    assert.equal(customResultA, '/custom/:param(kimchin)', 'param with custom type replaced correctly');
+    const customResult = getValidatedPath('/custom/:param[customType]', { customType: 'kimchin' });
+    assert.equal(customResult, '/custom/:param(kimchin)', 'param with custom type replaced correctly');
 
     assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId[id]', { customType: 'kimchin' })), 'param replaced correctly with passed custom types');
   });
