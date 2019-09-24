@@ -95,7 +95,7 @@ export const concatItems = (items, key) => items.reduce((acc, item) => {
   return acc.concat(arr);
 }, []);
 
-export const arrayOf = (number) => Array.from(new Array(number));
+export const arrayOf = (number) => Array.from(new Array(number)).map((_, index) => index);
 
 export const formatQuery = (object) => {
   if (!object) return null;

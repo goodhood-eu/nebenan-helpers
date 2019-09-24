@@ -228,6 +228,7 @@ describe('data', () => {
   it('arrayOf', () => {
     assert.isArray(arrayOf(), 'returns array');
     assert.equal(arrayOf(5).length, 5, 'correct length');
+    assert.equal(arrayOf(5)[4], 4, 'correct item');
   });
 
   it('formatQuery', () => {
