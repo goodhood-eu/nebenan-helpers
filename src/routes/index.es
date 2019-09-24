@@ -15,7 +15,7 @@ export const validations = {
 
 export const getParamReplacer = (typesValidation) => memoize((fragment, param, type) => {
   const regex = typesValidation[type];
-  return regex ? `${param}(${regex})` : param;
+  return regex ? `${param}(${regex})` : fragment;
 });
 
 export const getValidatedPath = (path, override) => {
