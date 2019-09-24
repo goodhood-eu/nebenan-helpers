@@ -2,7 +2,7 @@ import memoize from 'lodash/memoize';
 import { stringify, parse } from 'qs';
 
 
-const PARAM_TOKEN = /(:\w+)\[(\w+)\]/g;
+const PARAM_TOKEN = /(:\w+)<(\w+)>/g;
 
 export const validations = {
   id: '\\d+',
@@ -15,7 +15,7 @@ export const validations = {
 
 export const getParamReplacer = (typesValidation) => memoize((fragment, param, type) => {
   const regex = typesValidation[type];
-  return regex ? `${param}(${regex})` : fragment;
+  return regex ? `${param}(${regex})` : param;
 });
 
 export const getValidatedPath = (path, override) => {

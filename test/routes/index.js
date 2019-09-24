@@ -62,28 +62,28 @@ describe('routes', () => {
       id: '\\d+',
     });
 
-    const result = getReplacement(':itemId[id]', ':itemId', 'id');
+    const result = getReplacement(':itemId<id>', ':itemId', 'id');
 
     assert.equal(result, ':itemId(\\d+)', 'param replaced correctly');
-    assert.equal(getReplacement(':itemId[id]', ':itemId', 'id'), result, 'repeated params replacements work');
+    assert.equal(getReplacement(':itemId<id>', ':itemId', 'id'), result, 'repeated params replacements work');
 
-    assert.equal(getReplacement(':unknown[customType]', ':unknown', 'customType'), ':unknown[customType]', 'unknown param type passed through');
-    assert.equal(getReplacement(':unknown[customType]', ':unknown', 'customType'), ':unknown[customType]', 'repeated unknown calls work');
+    assert.equal(getReplacement(':unknown<customType>', ':unknown', 'customType'), ':unknown', 'unknown param type is removed');
+    assert.equal(getReplacement(':unknown<customType>', ':unknown', 'customType'), ':unknown', 'repeated unknown type calls work');
   });
 
   it('getValidatedPath', () => {
-    assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId[id]')), 'param replaced correctly');
-    assert.isTrue(/^\/test\/:itemId(.+)?$/.test(getValidatedPath('/test/:itemId[id]?')), 'optional param replaced correctly');
-    assert.isTrue(/^\/test\/:itemId(.+)*$/.test(getValidatedPath('/test/:itemId[id]*')), 'repeated param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId<id>')), 'param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)?$/.test(getValidatedPath('/test/:itemId<id>?')), 'optional param replaced correctly');
+    assert.isTrue(/^\/test\/:itemId(.+)*$/.test(getValidatedPath('/test/:itemId<id>*')), 'repeated param replaced correctly');
 
     assert.equal(getValidatedPath('/no/params'), '/no/params', 'paths without params work ok');
     assert.equal(getValidatedPath('/no/:param'), '/no/:param', 'paths without types check work ok');
-    assert.equal(getValidatedPath('/no/:param[customType]'), '/no/:param[customType]', 'params with unknown type passed through');
+    assert.equal(getValidatedPath('/no/:param<customType>'), '/no/:param', 'unknown param type is removed');
 
-    const customResult = getValidatedPath('/custom/:param[customType]', { customType: 'kimchin' });
+    const customResult = getValidatedPath('/custom/:param<customType>', { customType: 'kimchin' });
     assert.equal(customResult, '/custom/:param(kimchin)', 'param with custom type replaced correctly');
 
-    assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId[id]', { customType: 'kimchin' })), 'param replaced correctly with passed custom types');
+    assert.isTrue(/^\/test\/:itemId(.+)$/.test(getValidatedPath('/test/:itemId<id>', { customType: 'kimchin' })), 'param replaced correctly with passed custom types');
   });
 
   it('getQuery', () => {
