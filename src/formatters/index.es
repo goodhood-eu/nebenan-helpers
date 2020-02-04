@@ -41,13 +41,3 @@ export const formatDatesRange = (dates, options = {}, locale) => {
 };
 
 export const capitalizeFirst = (string = '') => string.charAt(0).toUpperCase() + string.slice(1);
-
-export const formatDistance = (number, digits = 2) => {
-  const padding = `${10 ** digits}`.slice(1);
-  let numberString = String(number);
-
-  if (numberString.length >= digits) return numberString.slice(0, digits);
-
-  numberString = `${padding}${numberString}`;
-  return numberString.slice(numberString.length - digits);
-};
