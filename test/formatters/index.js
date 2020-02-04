@@ -169,20 +169,41 @@ describe('formatters', () => {
   it('formatDistance', () => {
     const data = {
       stringVal: '21',
+      zeroedString: '00012',
+      floatString: '12.5',
       number: 42,
       smallNumber: 2,
+      largeNumber: 31415926535,
       float: 61.66,
+      largeFloat: 3.1415926535,
     };
 
     assert.isString(utils.formatDistance(data.number));
-    assert.isString(utils.formatDistance(data.smallNumber, 6));
+    assert.isString(utils.formatDistance(data.smallNumber));
+    assert.isString(utils.formatDistance(data.smallNumber, 20));
     assert.isString(utils.formatDistance(data.float));
     assert.isString(utils.formatDistance(data.float, 4));
     assert.isString(utils.formatDistance(data.stringVal));
+    assert.isString(utils.formatDistance(data.largeNumber));
+    assert.isString(utils.formatDistance(data.largeFloat));
+    assert.isString(utils.formatDistance(data.zeroedString));
+
     assert.equal(utils.formatDistance(data.number), '42', 'passing integer');
     assert.equal(utils.formatDistance(data.smallNumber), '02', 'passing integer');
+    assert.equal(utils.formatDistance(data.smallNumber, 20), '00000000000000000002', 'passing integer with large digit');
     assert.equal(utils.formatDistance(data.float), '61', 'passing float');
     assert.equal(utils.formatDistance(data.float, 4), '61.6', 'passing float and digit');
     assert.equal(utils.formatDistance(data.stringVal), '21');
+    assert.equal(utils.formatDistance(data.stringVal, 10), '0000000021');
+    assert.equal(utils.formatDistance(data.floatString), '12');
+    assert.equal(utils.formatDistance(data.floatString, 10), '00000012.5');
+
+    assert.equal(utils.formatDistance(data.largeNumber), '31', 'large number to 2 digits');
+    assert.equal(utils.formatDistance(data.largeNumber, 20), '00000000031415926535', 'large number to 20 digits');
+    assert.equal(utils.formatDistance(data.largeFloat), '3.', 'long float to 2 digits');
+    assert.equal(utils.formatDistance(data.largeFloat, 20), '000000003.1415926535', 'long float to 20 digits');
+    assert.equal(utils.formatDistance(data.largeFloat, 6), '3.1415', 'long float to 6 digits');
+    assert.equal(utils.formatDistance(data.zeroedString), '00', 'zeroed string to 2 digits');
+    assert.equal(utils.formatDistance(data.zeroedString, 20), '00000000000000000012', 'zeroed string to 20 digits');
   });
 });

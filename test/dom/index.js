@@ -33,9 +33,9 @@ describe('dom', () => {
   it('media', () => {
     const { mediaS, mediaM, mediaL } = media;
 
-    assert.equal(mediaS, '(min-width: 450px)', 'MediaS is 450px');
-    assert.equal(mediaM, '(min-width: 690px)', 'MediaM is 690px');
-    assert.equal(mediaL, '(min-width: 920px)', 'MediaL is 920px');
+    assert.isString(mediaS);
+    assert.isString(mediaM);
+    assert.isString(mediaL);
   });
 
   it('getMedia', () => {
@@ -123,6 +123,9 @@ describe('dom', () => {
     };
 
     assert.deepEqual(position(node), { left: 100, top: 10 }, 'return correct object');
+    assert.isDefined(position(node).left);
+    assert.isDefined(position(node).top);
+    assert.equal(Object.keys(position(node)).length, 2, 'Check if no other unnecessary props');
   });
 
   it('screenPosition', () => {
