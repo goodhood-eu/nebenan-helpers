@@ -165,4 +165,24 @@ describe('formatters', () => {
     assert.equal(utils.capitalizeFirst('A'), 'A', 'doesn\'t corrup data');
     assert.equal(utils.capitalizeFirst('penis'), 'Penis', 'capitalizes');
   });
+
+  it('formatDistance', () => {
+    const data = {
+      stringVal: '21',
+      number: 42,
+      smallNumber: 2,
+      float: 61.66,
+    };
+
+    assert.isString(utils.formatDistance(data.number));
+    assert.isString(utils.formatDistance(data.smallNumber, 6));
+    assert.isString(utils.formatDistance(data.float));
+    assert.isString(utils.formatDistance(data.float, 4));
+    assert.isString(utils.formatDistance(data.stringVal));
+    assert.equal(utils.formatDistance(data.number), '42', 'passing integer');
+    assert.equal(utils.formatDistance(data.smallNumber), '02', 'passing integer');
+    assert.equal(utils.formatDistance(data.float), '61', 'passing float');
+    assert.equal(utils.formatDistance(data.float, 4), '61.6', 'passing float and digit');
+    assert.equal(utils.formatDistance(data.stringVal), '21');
+  });
 });
