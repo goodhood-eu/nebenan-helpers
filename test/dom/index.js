@@ -1,4 +1,5 @@
 const { assert } = require('chai');
+const sinon = require('sinon');
 const {
   getPrefixed,
   media,
@@ -39,33 +40,18 @@ describe('dom', () => {
   });
 
   it('getMedia', () => {
-    const { mediaS, mediaM, mediaL } = media;
+    const { mediaS } = media;
 
-    const node1 = {
-      media: '(min-width: 450px) (max-width: 800px)',
+    const node = {
       matchMedia(query) {
-        return { matches: this.media.includes(query) };
-      },
-    };
-    const node2 = {
-      media: '(min-width: 690px) (max-width: 800px)',
-      matchMedia(query) {
-        return { matches: this.media.includes(query) };
-      },
-    };
-    const node3 = {
-      media: '(min-width: 920px) (max-width: 800px)',
-      matchMedia(query) {
-        return { matches: this.media.includes(query) };
+        return { query };
       },
     };
 
-    assert.isTrue(getMedia(node1, mediaS));
-    assert.isFalse(getMedia(node2, mediaS));
-    assert.isTrue(getMedia(node2, mediaM));
-    assert.isFalse(getMedia(node3, mediaM));
-    assert.isTrue(getMedia(node3, mediaL));
-    assert.isFalse(getMedia(node1, mediaL));
+    const spy = sinon.spy(node, 'matchMedia');
+
+    getMedia(node, mediaS);
+    assert.isTrue(spy.called);
   });
 
   it('offset', () => {
@@ -88,32 +74,17 @@ describe('dom', () => {
   });
 
   it('documentOffset', () => {
-    const node1 = {
-      top: 10,
-      left: 100,
+    const node = {
       getBoundingClientRect() {
-        return { top: this.top, left: this.left };
+        return {};
       },
     };
-    const docContainer1 = {
-      pageXOffset: 15,
-      pageYOffset: 11,
-    };
+    const docContainer = {};
 
-    const node2 = {
-      top: 40,
-      left: 20,
-      getBoundingClientRect() {
-        return { top: this.top, left: this.left };
-      },
-    };
-    const docContainer2 = {
-      pageXOffset: 15.8,
-      pageYOffset: 11.2,
-    };
+    const spy = sinon.spy(node, 'getBoundingClientRect');
 
-    assert.deepEqual(documentOffset(docContainer1, node1), { left: 115, top: 21 }, 'returns correct values');
-    assert.deepEqual(documentOffset(docContainer2, node2), { left: 36, top: 51 }, 'returns correct rounded values');
+    documentOffset(docContainer, node);
+    assert.isTrue(spy.called, 'getBoundingClientRect was called');
   });
 
   it('position', () => {
@@ -146,7 +117,10 @@ describe('dom', () => {
       },
     };
 
+    const spy = sinon.spy(node, 'getBoundingClientRect');
+
     assert.deepEqual(screenPosition(node), data, 'returns correct object from method');
+    assert.isTrue(spy.called);
   });
 
   it('size', () => {
@@ -178,7 +152,10 @@ describe('dom', () => {
       },
     };
 
-    assert.equal(preventDefault(event), 'prevented default', 'checks if prevent default is present');
+    const spy = sinon.spy(event, 'preventDefault');
+
+    preventDefault(event);
+    assert.isTrue(spy.called);
   });
 
   it('stopPropagation', () => {
@@ -188,7 +165,10 @@ describe('dom', () => {
       },
     };
 
-    assert.equal(stopPropagation(event), 'stopped propagation', 'checks if stop propagation is present');
+    const spy = sinon.spy(event, 'stopPropagation');
+
+    stopPropagation(event);
+    assert.isTrue(spy.called);
   });
 
   it('stopEvent', () => {
@@ -211,7 +191,12 @@ describe('dom', () => {
       },
     };
 
-    assert.isUndefined(stopEvent(event1), 'since it doesn\'t return anything and correct');
+    const spy1 = sinon.spy(event1, 'stopPropagation');
+    const spy2 = sinon.spy(event1, 'preventDefault');
+
+    stopEvent(event1);
+    assert.isTrue(spy1.called);
+    assert.isTrue(spy2.called);
     // Tests for presence of methods
     assert.throws(() => stopEvent(event2), Error);
     assert.throws(() => stopEvent(event3), Error);
@@ -242,10 +227,9 @@ describe('dom', () => {
     };
     const node = {};
 
-    /* eslint-disable-next-line */
-    for (const elem in data) {
-      assert.isDefined(scroll(node)[elem]);
-      assert.equal(typeof scroll(node)[elem], data[elem]);
-    }
+    Object.keys(data).forEach((key) => {
+      assert.isDefined(scroll(node)[key]);
+      assert.equal(typeof scroll(node)[key], data[key]);
+    });
   });
 });
