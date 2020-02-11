@@ -43,15 +43,12 @@ describe('dom', () => {
     const { mediaS } = media;
 
     const node = {
-      matchMedia(query) {
-        return { query };
-      },
+      matchMedia: sinon.spy((matches) => ({ matches })),
     };
 
-    const spy = sinon.spy(node, 'matchMedia');
-
     getMedia(node, mediaS);
-    assert.isTrue(spy.called);
+    assert.isTrue(node.matchMedia.calledOnce);
+    assert.isTrue(node.matchMedia.calledWith(mediaS));
   });
 
   it('offset', () => {
