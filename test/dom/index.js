@@ -72,16 +72,12 @@ describe('dom', () => {
 
   it('documentOffset', () => {
     const node = {
-      getBoundingClientRect() {
-        return {};
-      },
+      getBoundingClientRect: sinon.spy((top, left) => ({ top, left })),
     };
     const docContainer = {};
 
-    const spy = sinon.spy(node, 'getBoundingClientRect');
-
     documentOffset(docContainer, node);
-    assert.isTrue(spy.called, 'getBoundingClientRect was called');
+    assert.isTrue(node.getBoundingClientRect.calledOnce);
   });
 
   it('position', () => {
@@ -97,27 +93,13 @@ describe('dom', () => {
   });
 
   it('screenPosition', () => {
-    const data = {
-      x: 20,
-      y: 30,
-      width: 400,
-      height: 200,
-      top: -300,
-      right: 900,
-      bottom: 20,
-      left: 500,
-    };
-
     const node = {
-      getBoundingClientRect() {
-        return data;
-      },
+      getBoundingClientRect: sinon.spy(),
     };
 
-    const spy = sinon.spy(node, 'getBoundingClientRect');
+    screenPosition(node);
 
-    assert.deepEqual(screenPosition(node), data, 'returns correct object from method');
-    assert.isTrue(spy.called);
+    assert.isTrue(node.getBoundingClientRect.calledOnce);
   });
 
   it('size', () => {
@@ -144,56 +126,42 @@ describe('dom', () => {
 
   it('preventDefault', () => {
     const event = {
-      preventDefault() {
-        return 'prevented default';
-      },
+      preventDefault: sinon.spy(),
     };
 
-    const spy = sinon.spy(event, 'preventDefault');
-
     preventDefault(event);
-    assert.isTrue(spy.called);
+
+    assert.isTrue(event.preventDefault.calledOnce);
   });
 
   it('stopPropagation', () => {
     const event = {
-      stopPropagation() {
-        return 'stopped propagation';
-      },
+      stopPropagation: sinon.spy(),
     };
 
-    const spy = sinon.spy(event, 'stopPropagation');
-
     stopPropagation(event);
-    assert.isTrue(spy.called);
+
+    assert.isTrue(event.stopPropagation.calledOnce);
   });
 
   it('stopEvent', () => {
+    const { spy } = sinon;
+
     const event1 = {
-      preventDefault() {
-        return 'prevented default';
-      },
-      stopPropagation() {
-        return 'stopped propagation';
-      },
+      preventDefault: spy(),
+      stopPropagation: spy(),
     };
     const event2 = {
-      preventDefault() {
-        return 'prevented default';
-      },
+      preventDefault: spy(),
     };
     const event3 = {
-      stopPropagation() {
-        return 'stopped propagation';
-      },
+      stopPropagation: spy(),
     };
 
-    const spy1 = sinon.spy(event1, 'stopPropagation');
-    const spy2 = sinon.spy(event1, 'preventDefault');
-
     stopEvent(event1);
-    assert.isTrue(spy1.called);
-    assert.isTrue(spy2.called);
+
+    assert.isTrue(event1.preventDefault.calledOnce);
+    assert.isTrue(event1.stopPropagation.calledOnce);
     // Tests for presence of methods
     assert.throws(() => stopEvent(event2), Error);
     assert.throws(() => stopEvent(event3), Error);
@@ -205,7 +173,7 @@ describe('dom', () => {
 
     assert.isUndefined(eventCoordinates({}, 'pageX').pageX, 'handles non existant props ok');
     assert.equal(eventCoordinates(eventTouch, 'pageX').pageX, pageX, 'picks touch coords correctly');
-    assert.equal(eventCoordinates(eventTouch, 'pageX').pageX, pageX, 'picks mouse coords correctly');
+    assert.equal(eventCoordinates({ pageX }, 'pageX').pageX, pageX, 'picks mouse coords correctly');
   });
 
   it('escapeDomUrl', () => {
@@ -216,17 +184,30 @@ describe('dom', () => {
   });
 
   it('scroll', () => {
+    const { spy } = sinon;
     const data = {
       lock: 'function',
       get: 'function',
       to: 'function',
       unlock: 'function',
     };
-    const node = {};
+
+    const node = {
+      addEventListener: spy(),
+      removeEventListener: spy(),
+      scroll: spy(),
+    };
 
     Object.keys(data).forEach((key) => {
       assert.isDefined(scroll(node)[key]);
       assert.equal(typeof scroll(node)[key], data[key]);
     });
+
+    scroll(node).lock();
+    scroll(node).unlock();
+    scroll(node).to();
+    assert.isTrue(node.scroll.calledOnce);
+    assert.isTrue(node.addEventListener.calledOnce);
+    assert.isTrue(node.removeEventListener.calledOnce);
   });
 });

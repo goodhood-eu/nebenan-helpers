@@ -24,14 +24,6 @@ describe('formatters', () => {
     assert.equal(utils.formatNumber(5000, 7), '0005000', 'padded long number');
 
     assert.isString(utils.formatNumber(data.number));
-    assert.isString(utils.formatNumber(data.smallNumber));
-    assert.isString(utils.formatNumber(data.smallNumber, 20));
-    assert.isString(utils.formatNumber(data.float));
-    assert.isString(utils.formatNumber(data.float, 4));
-    assert.isString(utils.formatNumber(data.stringVal));
-    assert.isString(utils.formatNumber(data.largeNumber));
-    assert.isString(utils.formatNumber(data.largeFloat));
-    assert.isString(utils.formatNumber(data.zeroedString));
 
     assert.equal(utils.formatNumber(data.number), '42', 'passing integer');
     assert.equal(utils.formatNumber(data.smallNumber), '02', 'passing integer');
