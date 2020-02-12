@@ -199,15 +199,16 @@ describe('dom', () => {
     };
 
     Object.keys(data).forEach((key) => {
-      assert.isDefined(scroll(node)[key]);
-      assert.equal(typeof scroll(node)[key], data[key]);
+      assert.isFunction(scroll(node)[key]);
     });
 
     scroll(node).lock();
+    assert.isTrue(node.addEventListener.calledOnce);
+
     scroll(node).unlock();
+    assert.isTrue(node.removeEventListener.calledOnce);
+
     scroll(node).to();
     assert.isTrue(node.scroll.calledOnce);
-    assert.isTrue(node.addEventListener.calledOnce);
-    assert.isTrue(node.removeEventListener.calledOnce);
   });
 });
