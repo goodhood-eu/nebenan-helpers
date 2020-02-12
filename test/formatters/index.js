@@ -7,10 +7,41 @@ const options = { dateFormat, timeFormat };
 
 describe('formatters', () => {
   it('formatNumber', () => {
+    const data = {
+      stringVal: '21',
+      zeroedString: '00012',
+      floatString: '12.5',
+      number: 42,
+      smallNumber: 2,
+      largeNumber: 31415926535,
+      float: 61.66,
+      largeFloat: 3.1415926535,
+    };
+
     assert.equal(utils.formatNumber(1, 10), '0000000001', 'padded number correctly');
     assert.equal(utils.formatNumber(5), '05', 'sane defaults');
     assert.equal(utils.formatNumber(5000), '50', 'shortened number correctly');
     assert.equal(utils.formatNumber(5000, 7), '0005000', 'padded long number');
+
+    assert.isString(utils.formatNumber(data.number));
+
+    assert.equal(utils.formatNumber(data.number), '42', 'passing integer');
+    assert.equal(utils.formatNumber(data.smallNumber), '02', 'passing integer');
+    assert.equal(utils.formatNumber(data.smallNumber, 20), '00000000000000000002', 'passing integer with large digit');
+    assert.equal(utils.formatNumber(data.float), '61', 'passing float');
+    assert.equal(utils.formatNumber(data.float, 4), '61.6', 'passing float and digit');
+    assert.equal(utils.formatNumber(data.stringVal), '21');
+    assert.equal(utils.formatNumber(data.stringVal, 10), '0000000021');
+    assert.equal(utils.formatNumber(data.floatString), '12');
+    assert.equal(utils.formatNumber(data.floatString, 10), '00000012.5');
+
+    assert.equal(utils.formatNumber(data.largeNumber), '31', 'large number to 2 digits');
+    assert.equal(utils.formatNumber(data.largeNumber, 20), '00000000031415926535', 'large number to 20 digits');
+    assert.equal(utils.formatNumber(data.largeFloat), '3.', 'long float to 2 digits');
+    assert.equal(utils.formatNumber(data.largeFloat, 20), '000000003.1415926535', 'long float to 20 digits');
+    assert.equal(utils.formatNumber(data.largeFloat, 6), '3.1415', 'long float to 6 digits');
+    assert.equal(utils.formatNumber(data.zeroedString), '00', 'zeroed string to 2 digits');
+    assert.equal(utils.formatNumber(data.zeroedString, 20), '00000000000000000012', 'zeroed string to 20 digits');
   });
 
   it('formatDate', () => {
