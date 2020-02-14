@@ -91,6 +91,7 @@ describe('routes', () => {
     assert.deepEqual(getQuery({ search: '?' }), {}, 'empty 2');
     assert.deepEqual(getQuery({ search: '?test=test' }), { test: 'test' }, '1 param');
     assert.deepEqual(getQuery({ search: '?test=test&number=2' }), { test: 'test', number: '2' }, '2 params');
+    assert.deepEqual(getQuery({ search: '?redirect=%2Fneighbors%3Fsort%3Ddigbick' }), { redirect: '/neighbors?sort=digbick' }, 'redirect with query');
   });
 
   it('getSearch', () => {
