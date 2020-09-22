@@ -47,7 +47,7 @@ const handleVisibilityChanged = () => {
 
 if (isAlive) {
   heartbeatLoop();
-  document.addEventListener('visibilitychange', handleVisibilityChanged);
+  document.addEventListener('visibilitychange', handleVisibilityChanged, { passive: true });
 }
 
 export default addListener;
