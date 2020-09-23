@@ -48,13 +48,13 @@ const handleEmitterEvent = (event) => {
 
 const attachEmitterHandler = (event, eventData, eventSettings) => {
   if (eventData.listenersLength === 1) {
-    eventSettings.emitter.addEventListener(event, handleEmitterEvent);
+    eventSettings.emitter.addEventListener(event, handleEmitterEvent, { passive: true });
   }
 };
 
 const detachEmitterHandler = (event, eventData, eventSettings) => {
   if (eventData.listenersLength === 0) {
-    eventSettings.emitter.removeEventListener(event, handleEmitterEvent);
+    eventSettings.emitter.removeEventListener(event, handleEmitterEvent, { passive: true });
   }
 };
 
@@ -90,7 +90,14 @@ const addListener = (event, callback) => {
 
   attachEmitterHandler(event, eventData, eventSettings);
 
-  return () => removeListener(event, id);
+  const removeEventListener = () => {
+    invoke(handler.cancel);
+    removeListener(event, id);
+  };
+  // Allow to empty the calls queue
+  removeEventListener.cancel = handler.cancel;
+
+  return removeEventListener;
 };
 
 if (isDOMAvailable) createEventSettings();

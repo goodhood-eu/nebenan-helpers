@@ -113,8 +113,8 @@ export const scroll = (node) => {
     else node.scrollTop = pos;
   };
 
-  const lock = () => node.addEventListener('touchmove', preventDefault);
-  const unlock = () => node.removeEventListener('touchmove', preventDefault);
+  const lock = () => node.addEventListener('touchmove', preventDefault, { passive: false });
+  const unlock = () => node.removeEventListener('touchmove', preventDefault, { passive: false });
 
   return { get, to, lock, unlock };
 };
