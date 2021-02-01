@@ -1,7 +1,6 @@
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 import { invoke } from '../utils';
-import { getReactRootElement } from './utils';
 
 const RESIZE_RATE = 300;
 const SCROLL_RATE = 100;
@@ -36,7 +35,7 @@ const createEventSettings = () => {
   // handler (which is, in most cases, an unexpected bahvior). We can prevent this
   // from attaching specific events to the react root node instead.
   settingsMap.click = {
-    emitter: getReactRootElement(global.document),
+    emitter: global.document.querySelector('#main'),
   };
 
   defaultSettings.emitter = global.document;
