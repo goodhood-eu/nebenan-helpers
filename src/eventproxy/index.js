@@ -27,6 +27,17 @@ const createEventSettings = () => {
     wrapper(callback) { return throttle(callback, SCROLL_RATE); },
   };
 
+  // React 17 changed where it attaches it's event listeners.
+  // React 16 attached all event listeners to document. React 17 attaches all event
+  // listeners to the react root node.
+  // Given an event handler of type 'click' attaches a global click handler onto
+  // document, the click event would bubble up to the newly attached document click
+  // handler (which is, in most cases, an unexpected bahvior). We can prevent this
+  // from attaching specific events to the react root node instead.
+  settingsMap.click = {
+    emitter: global.document.querySelector('#main'),
+  };
+
   defaultSettings.emitter = global.document;
 };
 

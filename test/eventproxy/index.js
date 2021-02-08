@@ -4,15 +4,26 @@ const proxyquire = require('proxyquire').noPreserveCache();
 
 let eventproxy;
 let handler;
+let mainNodeHandler;
 
 describe('eventproxy', () => {
   beforeEach(() => {
     process.browser = true;
+
+    const mainNode = {};
+    mainNode.addEventListener = sinon.spy(
+      (event, callback) => { mainNodeHandler = callback; },
+    );
+    mainNode.removeEventListener = sinon.spy();
+
     global.document = {};
     global.document.addEventListener = sinon.spy((event, callback) => { handler = callback; });
     global.document.removeEventListener = sinon.spy();
+    global.document.querySelector = () => mainNode;
+
     global.addEventListener = sinon.spy((event, callback) => { handler = callback; });
     global.removeEventListener = sinon.spy();
+
     eventproxy = proxyquire('../../lib/eventproxy', {});
   });
 
@@ -65,7 +76,7 @@ describe('eventproxy', () => {
     assert.isTrue(spy2.calledOnce, 'called once for correct event 2');
   });
 
-  it('throttles default events', () => {
+  it('throttles scroll events', () => {
     const spy = sinon.spy();
 
     const unsubscribe = eventproxy('scroll', spy);
@@ -77,6 +88,15 @@ describe('eventproxy', () => {
     unsubscribe();
 
     assert.isTrue(spy.calledOnce, 'called once for correct event');
+  });
+
+  it('attaches click events to #main', () => {
+    const spy = sinon.spy();
+    eventproxy('click', spy);
+
+    mainNodeHandler({ type: 'click' });
+
+    assert.isTrue(spy.calledOnce, 'handler called for event on correct element');
   });
 
   it('multiple unsubscribes', () => {
