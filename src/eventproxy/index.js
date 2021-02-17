@@ -106,7 +106,7 @@ const addListener = (event, callback) => {
   return removeEventListener;
 };
 
-const addListenerAsync = (event, callback, { immediately = false }) => {
+const addListenerAsync = (event, callback, { immediately = false } = {}) => {
   if (typeof event !== 'string') throw new Error('Event name required');
   if (typeof callback !== 'function') throw new Error('Listener function required');
   if (!isDOMAvailable) return noop;
