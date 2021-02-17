@@ -85,17 +85,12 @@ const removeListener = (event, id) => {
 };
 
 const addListener = (event, callback) => {
-  if (typeof event !== 'string') throw new Error('Event name required');
-  if (typeof callback !== 'function') throw new Error('Listener function required');
-  if (!isDOMAvailable) return noop;
-
-  const eventData = getEventData(event);
   const eventSettings = getEventSettings(event);
-
-  eventData.lastIndex += 1;
-  const id = eventData.lastIndex;
   const handler = eventSettings.wrapper ? eventSettings.wrapper(callback) : callback;
 
+  const eventData = getEventData(event);
+  eventData.lastIndex += 1;
+  const id = eventData.lastIndex;
   eventData.listeners[id] = handler;
   eventData.listenersLength += 1;
 
@@ -111,6 +106,31 @@ const addListener = (event, callback) => {
   return removeEventListener;
 };
 
+const addListenerAsync = (event, callback, { immediately = false }) => {
+  if (typeof event !== 'string') throw new Error('Event name required');
+  if (typeof callback !== 'function') throw new Error('Listener function required');
+  if (!isDOMAvailable) return noop;
+
+  let addPromise;
+  if (immediately) {
+    addPromise = Promise.resolve(addListener(event, callback));
+  } else {
+    addPromise = new Promise((resolve) => {
+      setTimeout(() => resolve(addListener(event, callback)));
+    });
+  }
+
+  const removeEventListener = async() => {
+    (await addPromise)();
+  };
+
+  removeEventListener.cancel = async(...args) => {
+    (await addPromise).cancel(...args);
+  };
+
+  return removeEventListener;
+};
+
 if (isDOMAvailable) createEventSettings();
 
-export default addListener;
+export default addListenerAsync;
