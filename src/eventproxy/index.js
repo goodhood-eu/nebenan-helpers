@@ -4,6 +4,7 @@ import { invoke } from '../utils';
 
 const RESIZE_RATE = 300;
 const SCROLL_RATE = 100;
+const CALL_DELAY = 10;
 
 // ========================================================================================
 // Initialization
@@ -54,7 +55,10 @@ const getEventSettings = (event) => settingsMap[event] || defaultSettings;
 const handleEmitterEvent = (event) => {
   const eventData = getEventData(event.type);
   // Item may have been deleted during iteration cycle
-  Object.keys(eventData.listeners).forEach((id) => invoke(eventData.listeners[id], event));
+  Object.keys(eventData.listeners).forEach((id) => {
+    const handler = eventData.listeners[id];
+    if (handler && Date.now() - handler._attachedTime > CALL_DELAY) invoke(handler, event);
+  });
 };
 
 const attachEmitterHandler = (event, eventData, eventSettings) => {
@@ -95,6 +99,7 @@ const addListener = (event, callback) => {
   eventData.lastIndex += 1;
   const id = eventData.lastIndex;
   const handler = eventSettings.wrapper ? eventSettings.wrapper(callback) : callback;
+  handler._attachedTime = Date.now();
 
   eventData.listeners[id] = handler;
   eventData.listenersLength += 1;
