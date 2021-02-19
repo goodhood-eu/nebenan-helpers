@@ -4,6 +4,7 @@ import { invoke } from '../utils';
 
 const RESIZE_RATE = 300;
 const SCROLL_RATE = 100;
+const HANDLER_CALL_DELAY = 100;
 
 // ========================================================================================
 // Initialization
@@ -51,10 +52,26 @@ const getEventData = (event) => {
 
 const getEventSettings = (event) => settingsMap[event] || defaultSettings;
 
+// # This is a very dirty fix to a bad problem.
+// When attaching listeners of a given event type DURING the execution of an event handler
+// of this type, it needs to be prevented that the newly attached listener gets called immediately.
+// It is not a trivial task to get some code to execute after all event handlers for a
+// DOM element have been called. Some browser engines schedule tasks differently. Checking
+// for time is the most simple fix to the problem.
+//
+// How to prevent: Do not attach event listeners in event handlers.
+// https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
+const isReadyForExecution = (handler) => (
+  handler && Date.now() - handler._attachedAt > HANDLER_CALL_DELAY
+);
+
 const handleEmitterEvent = (event) => {
   const eventData = getEventData(event.type);
   // Item may have been deleted during iteration cycle
-  Object.keys(eventData.listeners).forEach((id) => invoke(eventData.listeners[id], event));
+  Object.keys(eventData.listeners).forEach((id) => {
+    const handler = eventData.listeners[id];
+    if (isReadyForExecution(handler)) handler(event);
+  });
 };
 
 const attachEmitterHandler = (event, eventData, eventSettings) => {
@@ -95,6 +112,7 @@ const addListener = (event, callback) => {
   eventData.lastIndex += 1;
   const id = eventData.lastIndex;
   const handler = eventSettings.wrapper ? eventSettings.wrapper(callback) : callback;
+  handler._attachedAt = Date.now();
 
   eventData.listeners[id] = handler;
   eventData.listenersLength += 1;

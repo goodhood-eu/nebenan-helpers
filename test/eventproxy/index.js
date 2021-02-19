@@ -5,6 +5,9 @@ const proxyquire = require('proxyquire').noPreserveCache();
 let eventproxy;
 let handler;
 let mainNodeHandler;
+let clock;
+
+const HANDLER_ATTACH_DELAY = 101;
 
 describe('eventproxy', () => {
   beforeEach(() => {
@@ -25,6 +28,8 @@ describe('eventproxy', () => {
     global.removeEventListener = sinon.spy();
 
     eventproxy = proxyquire('../../lib/eventproxy', {});
+
+    clock = sinon.useFakeTimers();
   });
 
   after(() => {
@@ -32,6 +37,10 @@ describe('eventproxy', () => {
     delete global.document;
     delete global.addEventListener;
     delete global.removeEventListener;
+  });
+
+  afterEach(() => {
+    clock.restore();
   });
 
   it('server safe', () => {
@@ -52,8 +61,20 @@ describe('eventproxy', () => {
   it('creates listener', () => {
     const spy = sinon.spy();
     const unsubscribe = eventproxy('diceroll', spy);
+    clock.tick(HANDLER_ATTACH_DELAY);
     assert.isTrue(global.document.addEventListener.calledOnce, 'initialized on client');
     assert.isTrue(spy.notCalled, 'didn\'t call callback');
+    unsubscribe();
+  });
+
+  it('does not fire handler during threshold', () => {
+    const spy = sinon.spy();
+    const unsubscribe = eventproxy('test', spy);
+    handler({ type: 'test' });
+    clock.tick(HANDLER_ATTACH_DELAY);
+    handler({ type: 'test' });
+
+    assert.isTrue(spy.calledOnce);
     unsubscribe();
   });
 
@@ -63,6 +84,7 @@ describe('eventproxy', () => {
 
     const unsubscribe = eventproxy('test', spy);
     const unsubscribe2 = eventproxy('test2', spy2);
+    clock.tick(HANDLER_ATTACH_DELAY);
 
     handler({ type: 'test' });
     handler({ type: 'test' });
@@ -80,6 +102,7 @@ describe('eventproxy', () => {
     const spy = sinon.spy();
 
     const unsubscribe = eventproxy('scroll', spy);
+    clock.tick(HANDLER_ATTACH_DELAY);
     handler({ type: 'scroll' });
     handler({ type: 'scroll' });
     handler({ type: 'scroll' });
@@ -93,6 +116,7 @@ describe('eventproxy', () => {
   it('attaches click events to #main', () => {
     const spy = sinon.spy();
     eventproxy('click', spy);
+    clock.tick(HANDLER_ATTACH_DELAY);
 
     mainNodeHandler({ type: 'click' });
 
@@ -103,6 +127,7 @@ describe('eventproxy', () => {
     const spy = sinon.spy();
 
     const unsubscribe = eventproxy('test', spy);
+    clock.tick(HANDLER_ATTACH_DELAY);
 
     handler({ type: 'test' });
     unsubscribe();
@@ -119,6 +144,7 @@ describe('eventproxy', () => {
 
     unsubscribe = eventproxy('test', spy);
     unsubscribe = eventproxy('test', spy);
+    clock.tick(HANDLER_ATTACH_DELAY);
 
     handler({ type: 'test' });
 
