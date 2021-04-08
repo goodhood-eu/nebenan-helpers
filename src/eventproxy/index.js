@@ -36,7 +36,7 @@ const createEventSettings = () => {
   // handler (which is, in most cases, an unexpected bahvior). We can prevent this
   // from attaching specific events to the react root node instead.
   settingsMap.click = {
-    emitter: global.document.querySelector('#main'),
+    emitter: global.document.querySelector('#main') || global.document,
   };
 
   defaultSettings.emitter = global.document;
