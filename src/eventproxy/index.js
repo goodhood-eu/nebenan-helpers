@@ -9,7 +9,7 @@ const HANDLER_CALL_DELAY = 100;
 // ========================================================================================
 // Initialization
 // ========================================================================================
-const isDOMAvailable = process.browser;
+const isDOMAvailable = typeof window !== 'undefined';
 
 const settingsMap = {};
 const eventMap = {};
