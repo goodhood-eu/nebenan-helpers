@@ -1,6 +1,6 @@
 const HEARTBEAT_INTERVAL = 1000 * 10; // 10sec
 
-const isAlive = process.browser;
+const isAlive = typeof window !== 'undefined';
 
 const listeners = {};
 let lastIndex = 0;
