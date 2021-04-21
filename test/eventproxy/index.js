@@ -11,7 +11,7 @@ const HANDLER_ATTACH_DELAY = 101;
 
 describe('eventproxy', () => {
   beforeEach(() => {
-    process.browser = true;
+    global.window = true;
 
     const mainNode = {};
     mainNode.addEventListener = sinon.spy(
@@ -33,7 +33,7 @@ describe('eventproxy', () => {
   });
 
   after(() => {
-    delete process.browser;
+    delete global.window;
     delete global.document;
     delete global.addEventListener;
     delete global.removeEventListener;
@@ -44,7 +44,7 @@ describe('eventproxy', () => {
   });
 
   it('server safe', () => {
-    delete process.browser;
+    delete global.window;
     global.document.addEventListener = sinon.spy();
     const servereventproxy = require('../../lib/eventproxy');
     const spy = sinon.spy();

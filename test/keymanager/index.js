@@ -8,7 +8,7 @@ let keys;
 
 describe('keymanager', () => {
   beforeEach(() => {
-    process.browser = true;
+    global.window = true;
     global.document = {};
     global.document.addEventListener = sinon.spy((event, callback) => { handler = callback; });
     const res = proxyquire('../../lib/keymanager', {});
@@ -17,12 +17,12 @@ describe('keymanager', () => {
   });
 
   after(() => {
-    delete process.browser;
+    delete global.window;
     delete global.document;
   });
 
   it('server safe', () => {
-    delete process.browser;
+    delete global.window;
     global.document.addEventListener = sinon.spy();
     const serverkeymanager = require('../../lib/keymanager').default;
     const spy = sinon.spy();
