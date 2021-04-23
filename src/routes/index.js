@@ -13,10 +13,13 @@ export const validations = {
   stringId: '\\w{6,}',
 };
 
-export const getParamReplacer = (typesValidation) => memoize((fragment, param, type) => {
-  const regex = typesValidation[type];
-  return regex ? `${param}(${regex})` : fragment;
-});
+export const getParamReplacer = (typesValidation) => memoize(
+  (fragment, param, type) => {
+    const regex = typesValidation[type];
+    return regex ? `${param}(${regex})` : fragment;
+  },
+  (fragment, param, type) => JSON.stringify({ fragment, param, type })
+);
 
 export const getValidatedPath = (path, override) => {
   const getReplacement = getParamReplacer({ ...validations, ...override });
