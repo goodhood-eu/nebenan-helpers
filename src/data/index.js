@@ -64,11 +64,6 @@ export const isModelEmpty = (model, skip) => {
 
 export const reverse = (arr) => arr.slice().reverse();
 
-export const gatherArrays = (object, fields) => {
-  if (!object || !fields) return [];
-  return fields.reduce(((acc, field) => acc.concat(object[field])), []);
-};
-
 export const has = (...args) => Object.prototype.hasOwnProperty.call(...args);
 
 export const hashToArray = (hash) => Object.keys(hash).reduce((acc, key) => {

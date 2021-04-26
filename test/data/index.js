@@ -9,7 +9,6 @@ const {
   arrayToChunks,
   isModelEmpty,
   reverse,
-  gatherArrays,
   has,
   hashToArray,
   concatItems,
@@ -159,18 +158,6 @@ describe('data', () => {
 
     assert.notEqual(reverse(arr), arr, 'do not modify original array');
     assert.deepEqual(reverse(arr), [3, 2, 1], 'reverse items');
-  });
-
-  it('gatherArrays', () => {
-    const obj = {
-      a: [1, 2, 3],
-      b: [4, 5],
-      c: [6, 7, 8],
-    };
-
-    assert.deepEqual(gatherArrays(obj, ['a', 'c']), [1, 2, 3, 6, 7, 8], 'gather specified array field into one array');
-    assert.deepEqual(gatherArrays(null, ['a', 'c']), [], 'return empty array if there is no object');
-    assert.deepEqual(gatherArrays(obj, null), [], 'return empty array if field are not specified');
   });
 
   it('has', () => {
