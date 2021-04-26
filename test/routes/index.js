@@ -67,6 +67,12 @@ describe('routes', () => {
     assert.equal(result, ':itemId(\\d+)', 'param replaced correctly');
     assert.equal(getReplacement(':itemId<id>', ':itemId', 'id'), result, 'repeated params replacements work');
 
+    assert.equal(
+      getReplacement(':itemId<id>', ':bullsheetId', 'id'),
+      ':bullsheetId(\\d+)',
+      'cache checks all arguments',
+    );
+
     assert.equal(getReplacement(':unknown<customType>', ':unknown', 'customType'), ':unknown<customType>', 'unknown param type passed through');
     assert.equal(getReplacement(':unknown<customType>', ':unknown', 'customType'), ':unknown<customType>', 'repeated unknown type calls work');
   });
