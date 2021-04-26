@@ -39,5 +39,3 @@ export const formatDatesRange = (dates, options = {}, locale) => {
   const humanTime2 = formatDate(dates[1].time, timeFormat, { locale });
   return `${getDateTime(dates[0], options, locale)} – ${humanTime2}`;
 };
-
-export const capitalizeFirst = (string = '') => string.charAt(0).toUpperCase() + string.slice(1);

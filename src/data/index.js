@@ -50,20 +50,6 @@ export const arrayToChunks = (array, count) => {
   return chunks;
 };
 
-export const setField = (obj, keypath, value) => {
-  let field = obj;
-  const array = keypath.split('.');
-
-  while (array.length > 1) {
-    const key = array.shift();
-    if (!field[key]) field[key] = {};
-    field = field[key];
-  }
-
-  field[array[0]] = value;
-  return obj;
-};
-
 export const isModelEmpty = (model, skip) => {
   let skipHash;
   if (skip) skipHash = arrayToHash(skip);

@@ -7,7 +7,6 @@ const {
   arrayToHash,
   arrayToObject,
   arrayToChunks,
-  setField,
   isModelEmpty,
   reverse,
   gatherArrays,
@@ -132,17 +131,6 @@ describe('data', () => {
     assert.deepEqual(arrayToChunks(inputArray5, 2), outputArray5, 'split into 2 chunks properly');
     assert.deepEqual(arrayToChunks(inputArray, 0), [], 'protects agains 0 chunks requested');
     assert.deepEqual(arrayToChunks(inputArray, 1), [inputArray], 'handles 1 chunk requested');
-  });
-
-  it('setField', () => {
-    const obj = { a: { b: 3 } };
-    const empty = {};
-
-    setField(obj, 'a.b', 5);
-    setField(empty, 'd.c', 'hello');
-
-    assert.equal(obj.a.b, 5, 'override existing value');
-    assert.equal(empty.d.c, 'hello', 'set all path');
   });
 
   it('isModelEmpty', () => {

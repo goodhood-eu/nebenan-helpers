@@ -3,7 +3,6 @@ const { assert } = require('chai');
 const {
   getID,
   getUID,
-  getRadian,
   getDistance,
 } = require('../../lib/calculations');
 
@@ -27,12 +26,6 @@ describe('calculations', () => {
 
     assert.equal(uuid.split('-').length, 5, 'returns correct number of segments');
     assert.match(uuid, new RegExp(uidRegexString), 'correct pattern format');
-  });
-
-  it('getRadian', () => {
-    assert.isNumber(getRadian(90), 'returns a number');
-    assert.equal(Math.floor(getRadian(57.296)), 1, 'returns correct value for 1');
-    assert.equal(Math.floor(getRadian(0)), 0, 'returns correct value for 0');
   });
 
   it('getDistance', () => {

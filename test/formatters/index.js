@@ -189,11 +189,4 @@ describe('formatters', () => {
 
     assert.equal(result, expected, 'correct dates formatting');
   });
-
-  it('capitalizeFirst', () => {
-    assert.isString(utils.capitalizeFirst(), 'empty safe');
-    assert.isString(utils.capitalizeFirst(''), 'empty string safe');
-    assert.equal(utils.capitalizeFirst('A'), 'A', 'doesn\'t corrup data');
-    assert.equal(utils.capitalizeFirst('penis'), 'Penis', 'capitalizes');
-  });
 });
