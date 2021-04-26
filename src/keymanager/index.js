@@ -12,7 +12,7 @@ const keyMap = {
   LEFT: 37,
 };
 
-const isDOMAvailable = process.browser;
+const isDOMAvailable = typeof window !== 'undefined';
 const normalizeKey = (key) => key.toUpperCase();
 
 const listeners = {};

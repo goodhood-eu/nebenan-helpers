@@ -10,7 +10,7 @@ let clock;
 
 describe('heartbeat', () => {
   beforeEach(() => {
-    process.browser = true;
+    global.window = true;
     global.document = {};
     global.document.addEventListener = sinon.spy((event, callback) => { handler = callback; });
 
@@ -24,13 +24,13 @@ describe('heartbeat', () => {
   after(() => {
     document.hidden = true;
     handler(); // stop heartbeat
-    delete process.browser;
+    delete global.window;
     delete global.document;
     clock.restore();
   });
 
   it('server safe', () => {
-    delete process.browser;
+    delete global.window;
     global.document.addEventListener = sinon.spy();
     const serverheartbeat = require('../../lib/heartbeat');
 

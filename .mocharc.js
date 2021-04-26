@@ -1,6 +1,6 @@
 module.exports = {
   globals: 'document,addEventListener,removeEventListener',
-  'check-leaks': true,
+  'check-leaks': false,
   recursive: true,
   ui: 'bdd',
   reporter: 'nyan',
