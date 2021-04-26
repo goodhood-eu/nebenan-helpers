@@ -68,8 +68,8 @@ describe('routes', () => {
     assert.equal(getReplacement(':itemId<id>', ':itemId', 'id'), result, 'repeated params replacements work');
 
     assert.equal(
-      getReplacement(':itemId<id>', ':bullshitId', 'id'),
-      ':bullshitId(\\d+)',
+      getReplacement(':itemId<id>', ':bullsheetId', 'id'),
+      ':bullsheetId(\\d+)',
       'cache checks all arguments',
     );
 
