@@ -13,7 +13,6 @@ const {
   hashToArray,
   concatItems,
   arrayOf,
-  formatQuery,
   ceilToFixed,
 } = require('../../lib/data');
 
@@ -203,28 +202,6 @@ describe('data', () => {
     assert.isArray(arrayOf(), 'returns array');
     assert.equal(arrayOf(5).length, 5, 'correct length');
     assert.equal(arrayOf(5)[4], 4, 'correct item');
-  });
-
-  it('formatQuery', () => {
-    const queryObj = {
-      str: '123',
-      num: 123,
-      arr: [1, 2, 3],
-      nested: {
-        str: '456',
-        num: 456,
-        arr: [4, 5, 6],
-      },
-    };
-
-    const expected = {
-      str: '123',
-      num: 123,
-      arr: '1,2,3',
-    };
-
-    assert.isNull(formatQuery(), 'empty ok');
-    assert.deepEqual(formatQuery(queryObj), expected, 'works correctly');
   });
 
   it('ceilToFixed', () => {

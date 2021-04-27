@@ -78,17 +78,6 @@ export const concatItems = (items, key) => items.reduce((acc, item) => {
 
 export const arrayOf = (number) => Array.from(new Array(number)).map((_, index) => index);
 
-export const formatQuery = (object) => {
-  if (!object) return null;
-
-  return Object.keys(object).reduce((acc, key) => {
-    const value = object[key];
-    if (Array.isArray(value)) acc[key] = value.join(',');
-    else if (typeof value !== 'object') acc[key] = value;
-    return acc;
-  }, {});
-};
-
 export const ceilToFixed = (float, digits = 2) => {
   const fx = 10 ** digits;
   return Math.ceil(float * fx) / fx;
