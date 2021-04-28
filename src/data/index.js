@@ -50,20 +50,6 @@ export const arrayToChunks = (array, count) => {
   return chunks;
 };
 
-export const setField = (obj, keypath, value) => {
-  let field = obj;
-  const array = keypath.split('.');
-
-  while (array.length > 1) {
-    const key = array.shift();
-    if (!field[key]) field[key] = {};
-    field = field[key];
-  }
-
-  field[array[0]] = value;
-  return obj;
-};
-
 export const isModelEmpty = (model, skip) => {
   let skipHash;
   if (skip) skipHash = arrayToHash(skip);
@@ -77,11 +63,6 @@ export const isModelEmpty = (model, skip) => {
 };
 
 export const reverse = (arr) => arr.slice().reverse();
-
-export const gatherArrays = (object, fields) => {
-  if (!object || !fields) return [];
-  return fields.reduce(((acc, field) => acc.concat(object[field])), []);
-};
 
 export const has = (...args) => Object.prototype.hasOwnProperty.call(...args);
 
@@ -97,20 +78,7 @@ export const concatItems = (items, key) => items.reduce((acc, item) => {
 
 export const arrayOf = (number) => Array.from(new Array(number)).map((_, index) => index);
 
-export const formatQuery = (object) => {
-  if (!object) return null;
-
-  return Object.keys(object).reduce((acc, key) => {
-    const value = object[key];
-    if (Array.isArray(value)) acc[key] = value.join(',');
-    else if (typeof value !== 'object') acc[key] = value;
-    return acc;
-  }, {});
-};
-
 export const ceilToFixed = (float, digits = 2) => {
   const fx = 10 ** digits;
   return Math.ceil(float * fx) / fx;
 };
-
-export const roundFloat = (float, digits = 2) => Number(float.toFixed(digits));

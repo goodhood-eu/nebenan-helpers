@@ -1,3 +1,5 @@
+import { getRadian } from './utils';
+
 const EARTH_RADIUS = 6371; // km
 
 export const getID = () => (
@@ -20,8 +22,6 @@ export const getUID = () => (
     getID(),
   ].join('')
 );
-
-export const getRadian = (degrees) => (degrees * (Math.PI / 180));
 
 // Haversine formula
 export const getDistance = (lat1, lon1, lat2, lon2) => {

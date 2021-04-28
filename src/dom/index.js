@@ -1,4 +1,4 @@
-import { capitalizeFirst } from '../formatters';
+import { upperFirst } from 'lodash';
 
 const STYLES_PREFIXES = {
   transform: ['Webkit', 'ms'],
@@ -15,7 +15,7 @@ export const getPrefixed = (styles) => {
 
     STYLES_PREFIXES[key].forEach((prefix) => {
       // react uses camelCase
-      result[`${prefix}${capitalizeFirst(key)}`] = styles[key];
+      result[`${prefix}${upperFirst(key)}`] = styles[key];
     });
   }
 

@@ -7,17 +7,13 @@ const {
   arrayToHash,
   arrayToObject,
   arrayToChunks,
-  setField,
   isModelEmpty,
   reverse,
-  gatherArrays,
   has,
   hashToArray,
   concatItems,
   arrayOf,
-  formatQuery,
   ceilToFixed,
-  roundFloat,
 } = require('../../lib/data');
 
 
@@ -134,17 +130,6 @@ describe('data', () => {
     assert.deepEqual(arrayToChunks(inputArray, 1), [inputArray], 'handles 1 chunk requested');
   });
 
-  it('setField', () => {
-    const obj = { a: { b: 3 } };
-    const empty = {};
-
-    setField(obj, 'a.b', 5);
-    setField(empty, 'd.c', 'hello');
-
-    assert.equal(obj.a.b, 5, 'override existing value');
-    assert.equal(empty.d.c, 'hello', 'set all path');
-  });
-
   it('isModelEmpty', () => {
     const filledModel = {
       hello: 'asdasd',
@@ -171,18 +156,6 @@ describe('data', () => {
 
     assert.notEqual(reverse(arr), arr, 'do not modify original array');
     assert.deepEqual(reverse(arr), [3, 2, 1], 'reverse items');
-  });
-
-  it('gatherArrays', () => {
-    const obj = {
-      a: [1, 2, 3],
-      b: [4, 5],
-      c: [6, 7, 8],
-    };
-
-    assert.deepEqual(gatherArrays(obj, ['a', 'c']), [1, 2, 3, 6, 7, 8], 'gather specified array field into one array');
-    assert.deepEqual(gatherArrays(null, ['a', 'c']), [], 'return empty array if there is no object');
-    assert.deepEqual(gatherArrays(obj, null), [], 'return empty array if field are not specified');
   });
 
   it('has', () => {
@@ -231,43 +204,11 @@ describe('data', () => {
     assert.equal(arrayOf(5)[4], 4, 'correct item');
   });
 
-  it('formatQuery', () => {
-    const queryObj = {
-      str: '123',
-      num: 123,
-      arr: [1, 2, 3],
-      nested: {
-        str: '456',
-        num: 456,
-        arr: [4, 5, 6],
-      },
-    };
-
-    const expected = {
-      str: '123',
-      num: 123,
-      arr: '1,2,3',
-    };
-
-    assert.isNull(formatQuery(), 'empty ok');
-    assert.deepEqual(formatQuery(queryObj), expected, 'works correctly');
-  });
-
   it('ceilToFixed', () => {
     assert.equal(ceilToFixed(5), 5, 'doesn\'t change integers');
     assert.equal(ceilToFixed(5.111), 5.12, 'correct defaults');
     assert.equal(ceilToFixed(5.1, 0), 6, 'converts to int');
     assert.equal(ceilToFixed(5.11111111111, 6), 5.111112, 'converts to fixed correctly');
     assert.equal(ceilToFixed(5.123, 6), 5.123, 'doesn\'t change float when not needed');
-  });
-
-  it('roundFloat', () => {
-    assert.isNumber(roundFloat(23), 'correct type');
-    assert.equal(roundFloat(23), 23, 'integers intact');
-    assert.equal(roundFloat(.23), .23, 'ok float intact');
-    assert.equal(roundFloat(.230000000000), .23, 'cuts off empty zeroes');
-    assert.equal(roundFloat(.2300000000001), .23, 'rounds down');
-    assert.equal(roundFloat(.2300000000009), .23, 'rounds down when far behind zeroes');
-    assert.equal(roundFloat(.1 + .2), .3, 'the .1 + .2 test');
   });
 });
