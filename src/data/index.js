@@ -1,5 +1,6 @@
 /**
  * Compare two hashes
+ * @function
  * @param {string} hash1
  * @param {string} hash2
  * @return {boolean}
@@ -8,6 +9,7 @@ export const isSameHash = (hash1, hash2) => (JSON.stringify(hash1) === JSON.stri
 
 /**
  * Compare two arrays
+ * @function
  * @param {any[]} source
  * @param {any[]} target
  * @param {object} options
@@ -31,6 +33,7 @@ export const isSameArray = (source, target, options = {}) => {
 
 /**
  * Compare two object
+ * @function
  * @param {object} source
  * @param {object} target
  * @return {boolean}
@@ -43,6 +46,7 @@ export const isSameCollection = (source, target) => {
 
 /**
  * Convert array to hash
+ * @function
  * @param {any[]} array
  * @param {string} selector
  * @return {object}

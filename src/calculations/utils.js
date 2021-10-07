@@ -1,4 +1,5 @@
 /**
+ * @function
  * @param {number} degrees
  * @return {number} radian
  */

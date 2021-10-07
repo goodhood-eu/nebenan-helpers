@@ -4,6 +4,7 @@ const EARTH_RADIUS = 6371; // km
 
 /**
  * Pseudo-random ID generator
+ * @function
  * @return {string} Generated ID (4 symbols)
  */
 export const getID = () => (
@@ -12,6 +13,7 @@ export const getID = () => (
 
 /**
  * UUID generator
+ * @function
  * @return {string} Generated UUID string
  */
 export const getUID = () => (
@@ -33,10 +35,11 @@ export const getUID = () => (
 
 /**
  * Haversine formula
- * @param lat1 Latitude coordinate 1
- * @param lon1 Longitude coordinate 1
- * @param lat2 Latitude coordinate 2
- * @param lon2 Longitude coordinate 1
+ * @function
+ * @param {number} lat1 Latitude coordinate 1
+ * @param {number} lon1 Longitude coordinate 1
+ * @param {number} lat2 Latitude coordinate 2
+ * @param {number} lon2 Longitude coordinate 1
  * @return {number}
  */
 export const getDistance = (lat1, lon1, lat2, lon2) => {
