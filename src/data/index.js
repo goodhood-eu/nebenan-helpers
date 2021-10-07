@@ -6,6 +6,13 @@
  */
 export const isSameHash = (hash1, hash2) => (JSON.stringify(hash1) === JSON.stringify(hash2));
 
+/**
+ * Compare two arrays
+ * @param {any[]} source
+ * @param {any[]} target
+ * @param {object} options
+ * @return {boolean}
+ */
 export const isSameArray = (source, target, options = {}) => {
   if (source === target) return true;
   if (!Array.isArray(source) || !Array.isArray(target)) return false;
@@ -22,12 +29,24 @@ export const isSameArray = (source, target, options = {}) => {
   return sortedSource.every((element, index) => (sortedTarget[index] === element));
 };
 
+/**
+ * Compare two object
+ * @param {object} source
+ * @param {object} target
+ * @return {boolean}
+ */
 export const isSameCollection = (source, target) => {
   if (source === target) return true;
   if (!Array.isArray(source) || !Array.isArray(target)) return false;
   return isSameArray(source.map(JSON.stringify), target.map(JSON.stringify), { sorted: true });
 };
 
+/**
+ * Convert array to hash
+ * @param {any[]} array
+ * @param {string} selector
+ * @return {object}
+ */
 export const arrayToHash = (array, selector) => array.reduce((acc, item) => {
   const key = selector ? item[selector] : item;
   acc[key] = true;
