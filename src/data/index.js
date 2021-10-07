@@ -12,7 +12,7 @@ export const isSameHash = (hash1, hash2) => (JSON.stringify(hash1) === JSON.stri
  * @function
  * @param {any[]} source
  * @param {any[]} target
- * @param {object} options
+ * @param {object} [options]
  * @return {boolean}
  */
 export const isSameArray = (source, target, options = {}) => {
@@ -48,7 +48,7 @@ export const isSameCollection = (source, target) => {
  * Convert array to hash
  * @function
  * @param {any[]} array
- * @param {string} selector
+ * @param {string} [selector]
  * @return {object}
  */
 export const arrayToHash = (array, selector) => array.reduce((acc, item) => {
@@ -57,11 +57,25 @@ export const arrayToHash = (array, selector) => array.reduce((acc, item) => {
   return acc;
 }, {});
 
+/**
+ * Convert array to object
+ * @function
+ * @param {any[]} array
+ * @param {string} [keyField]
+ * @return {object}
+ */
 export const arrayToObject = (array, keyField = 'id') => array.reduce((acc, item) => {
   acc[item[keyField]] = item;
   return acc;
 }, {});
 
+/**
+ * Split array to array of smaller chunks
+ * @function
+ * @param {any[]} array
+ * @param {number} count
+ * @return {array}
+ */
 export const arrayToChunks = (array, count) => {
   if (!array || !count) return [];
   if (count === 1) return [[...array]];
@@ -79,6 +93,12 @@ export const arrayToChunks = (array, count) => {
   return chunks;
 };
 
+/**
+ * @function
+ * @param {object} model
+ * @param {any[]} [skip]
+ * @return {boolean}
+ */
 export const isModelEmpty = (model, skip) => {
   let skipHash;
   if (skip) skipHash = arrayToHash(skip);
@@ -91,22 +111,54 @@ export const isModelEmpty = (model, skip) => {
   return true;
 };
 
+/**
+ * Reverse (not on place) an array
+ * @function
+ * @param {any[]} arr
+ * @return {array}
+ */
 export const reverse = (arr) => arr.slice().reverse();
 
+/**
+ * @function
+ * @param args
+ * @return {boolean}
+ */
 export const has = (...args) => Object.prototype.hasOwnProperty.call(...args);
 
+/**
+ * @function
+ * @param {object} hash
+ * @return {array}
+ */
 export const hashToArray = (hash) => Object.keys(hash).reduce((acc, key) => {
   if (hash[key]) acc.push(key);
   return acc;
 }, []);
 
+/**
+ * @function
+ * @param {any[]} items
+ * @param {string} key
+ */
 export const concatItems = (items, key) => items.reduce((acc, item) => {
   const arr = key ? item[key] : item;
   return acc.concat(arr);
 }, []);
 
+/**
+ * @function
+ * @param {number} number
+ * @return {number[]}
+ */
 export const arrayOf = (number) => Array.from(new Array(number)).map((_, index) => index);
 
+/**
+ * @function
+ * @param {number} float
+ * @param {number} digits
+ * @return {number}
+ */
 export const ceilToFixed = (float, digits = 2) => {
   const fx = 10 ** digits;
   return Math.ceil(float * fx) / fx;
