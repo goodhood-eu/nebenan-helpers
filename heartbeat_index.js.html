@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>calculations/index.js - Documentation</title>
+    <title>heartbeat/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">calculations/index.js</h1>
+    <h1 class="page-title">heartbeat/index.js</h1>
     
 
     
@@ -39,61 +39,65 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { getRadian } from './utils';
+            <pre class="prettyprint source linenums"><code>const HEARTBEAT_INTERVAL = 1000 * 10; // 10sec
 
-const EARTH_RADIUS = 6371; // km
+const isAlive = typeof window !== 'undefined';
 
-/**
- * Pseudo-random ID generator
- * @function
- * @return {string} Generated ID (4 symbols)
- */
-export const getID = () => (
-  Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-);
+const listeners = {};
+let lastIndex = 0;
+let heartbeatTid = null;
 
-/**
- * UUID generator
- * @function
- * @return {string} Generated UUID string
- */
-export const getUID = () => (
-  [
-    getID(),
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    getID(),
-    getID(),
-  ].join('')
-);
-
-/**
- * Haversine formula
- * @function
- * @param {number} lat1 Latitude coordinate 1
- * @param {number} lon1 Longitude coordinate 1
- * @param {number} lat2 Latitude coordinate 2
- * @param {number} lon2 Longitude coordinate 1
- * @return {number}
- */
-export const getDistance = (lat1, lon1, lat2, lon2) => {
-  const dLat = getRadian(lat2 - lat1);
-  const dLon = getRadian(lon2 - lon1);
-
-  const dLatSquared = Math.sin(dLat / 2) ** 2;
-  const dLonSquared = Math.sin(dLon / 2) ** 2;
-
-  const a = dLatSquared + (dLonSquared * Math.cos(getRadian(lat1)) * Math.cos(getRadian(lat2)));
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return EARTH_RADIUS * c;
+const removeListener = (id) => {
+  if (!listeners[id]) return;
+  delete listeners[id];
 };
+
+/**
+ * @function
+ * @param {number} interval
+ * @param {function} callback
+ * @return {function(): void}
+ */
+const addListener = (interval, callback) => {
+  if (typeof callback !== 'function') throw new Error('Listener function required');
+  lastIndex += 1;
+
+  const id = lastIndex;
+  const called = Date.now();
+
+  listeners[id] = { interval, callback, called };
+
+  return () => removeListener(id);
+};
+
+const heartbeatLoop = () => {
+  const now = Date.now();
+
+  Object.keys(listeners).forEach((id) => {
+    const item = listeners[id];
+    // Item may have been deleted during iteration cycle
+    if (item &amp;&amp; (now - item.called > item.interval)) {
+      item.callback();
+      item.called = now;
+    }
+  });
+
+  heartbeatTid = setTimeout(heartbeatLoop, HEARTBEAT_INTERVAL);
+};
+
+const handleVisibilityChanged = () => {
+  if (document.hidden) {
+    clearTimeout(heartbeatTid);
+    heartbeatTid = null;
+  } else heartbeatLoop();
+};
+
+if (isAlive) {
+  heartbeatLoop();
+  document.addEventListener('visibilitychange', handleVisibilityChanged, { passive: true });
+}
+
+export default addListener;
 </code></pre>
         </article>
     </section>

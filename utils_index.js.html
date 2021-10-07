@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>calculations/index.js - Documentation</title>
+    <title>utils/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">calculations/index.js</h1>
+    <h1 class="page-title">utils/index.js</h1>
     
 
     
@@ -39,61 +39,58 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { getRadian } from './utils';
-
-const EARTH_RADIUS = 6371; // km
+            <pre class="prettyprint source linenums"><code>const unsafeFileCharsRegex = /[\\/:*?"'&lt;>|]/g;
 
 /**
- * Pseudo-random ID generator
  * @function
- * @return {string} Generated ID (4 symbols)
+ * @param {string} path
+ * @param {string} fullPath
+ * @return {boolean}
  */
-export const getID = () => (
-  Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-);
+export const isPathActive = (path, fullPath) => {
+  const pathChunks = path.split('/');
+  const fullPathChunks = fullPath.split('/');
 
-/**
- * UUID generator
- * @function
- * @return {string} Generated UUID string
- */
-export const getUID = () => (
-  [
-    getID(),
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    getID(),
-    getID(),
-  ].join('')
-);
-
-/**
- * Haversine formula
- * @function
- * @param {number} lat1 Latitude coordinate 1
- * @param {number} lon1 Longitude coordinate 1
- * @param {number} lat2 Latitude coordinate 2
- * @param {number} lon2 Longitude coordinate 1
- * @return {number}
- */
-export const getDistance = (lat1, lon1, lat2, lon2) => {
-  const dLat = getRadian(lat2 - lat1);
-  const dLon = getRadian(lon2 - lon1);
-
-  const dLatSquared = Math.sin(dLat / 2) ** 2;
-  const dLonSquared = Math.sin(dLon / 2) ** 2;
-
-  const a = dLatSquared + (dLonSquared * Math.cos(getRadian(lat1)) * Math.cos(getRadian(lat2)));
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return EARTH_RADIUS * c;
+  fullPathChunks.length = pathChunks.length;
+  return pathChunks.join('/') === fullPathChunks.join('/');
 };
+
+/**
+ * @function
+ * @param {string} filename
+ * @return {string}
+ */
+export const escapeFileName = (filename) => filename.replace(unsafeFileCharsRegex, '_');
+
+/**
+ * @function
+ * @param {function} fn
+ * @param args
+ * @return {*}
+ */
+export const invoke = (fn, ...args) => {
+  if (typeof fn === 'function') return fn(...args);
+};
+
+/**
+ * @function
+ * @param {object} context
+ * @param {function} fn
+ * @param args
+ * @return {*}
+ */
+export const invokeOn = (context, fn, ...args) => {
+  if (context &amp;&amp; typeof fn === 'function') return fn.call(context, ...args);
+};
+
+/**
+ * @function
+ * @param {object} context
+ * @param funcs
+ */
+export const bindTo = (context, ...funcs) => funcs.forEach((func) => {
+  if (context[func]) context[func] = context[func].bind(context);
+});
 </code></pre>
         </article>
     </section>

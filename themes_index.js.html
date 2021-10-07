@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>calculations/index.js - Documentation</title>
+    <title>themes/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">calculations/index.js</h1>
+    <h1 class="page-title">themes/index.js</h1>
     
 
     
@@ -39,60 +39,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { getRadian } from './utils';
-
-const EARTH_RADIUS = 6371; // km
+            <pre class="prettyprint source linenums"><code>/**
+ * @function
+ * @param {string} key
+ * @param {string} prefix
+ * @return {string}
+ */
+const stripPrefix = (key, prefix) => {
+  const strippedKey = key.substring(prefix.length);
+  return strippedKey.charAt(0).toLowerCase() + strippedKey.slice(1);
+};
 
 /**
- * Pseudo-random ID generator
  * @function
- * @return {string} Generated ID (4 symbols)
+ * @param {object} theme
+ * @param {string} prefix
+ * @return {{}}
  */
-export const getID = () => (
-  Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+export const getSubTheme = (theme = {}, prefix) => (
+  Object.entries(theme)
+    .reduce((acc, [key, value]) => {
+      if (key.startsWith(prefix)) {
+        acc[stripPrefix(key, prefix)] = value;
+      }
+
+      return acc;
+    }, {})
 );
 
 /**
- * UUID generator
  * @function
- * @return {string} Generated UUID string
+ * @param {object} baseTheme
+ * @param {object} otherTheme
+ * @return {{}|*}
  */
-export const getUID = () => (
-  [
-    getID(),
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    '-',
-    getID(),
-    getID(),
-    getID(),
-  ].join('')
-);
+export const mergeThemes = (baseTheme, otherTheme) => {
+  if (!otherTheme) return baseTheme;
 
-/**
- * Haversine formula
- * @function
- * @param {number} lat1 Latitude coordinate 1
- * @param {number} lon1 Longitude coordinate 1
- * @param {number} lat2 Latitude coordinate 2
- * @param {number} lon2 Longitude coordinate 1
- * @return {number}
- */
-export const getDistance = (lat1, lon1, lat2, lon2) => {
-  const dLat = getRadian(lat2 - lat1);
-  const dLon = getRadian(lon2 - lon1);
+  return Object.keys(baseTheme).reduce((acc, key) => {
+    const baseValue = baseTheme[key];
+    const extendValue = otherTheme[key];
 
-  const dLatSquared = Math.sin(dLat / 2) ** 2;
-  const dLonSquared = Math.sin(dLon / 2) ** 2;
-
-  const a = dLatSquared + (dLonSquared * Math.cos(getRadian(lat1)) * Math.cos(getRadian(lat2)));
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return EARTH_RADIUS * c;
+    acc[key] = [baseValue, extendValue].filter(Boolean).join(' ');
+    return acc;
+  }, {});
 };
 </code></pre>
         </article>
