@@ -1,7 +1,12 @@
 import formatDateParsed from 'date-fns/format';
 import parseDate from 'date-fns/parseISO';
 
-
+/**
+ * @function
+ * @param {number} number
+ * @param {number} digits
+ * @return {string}
+ */
 export const formatNumber = (number, digits = 2) => {
   const padding = `${10 ** digits}`.slice(1);
   let numberString = String(number);
@@ -12,6 +17,12 @@ export const formatNumber = (number, digits = 2) => {
   return numberString.slice(numberString.length - digits);
 };
 
+/**
+ * @function
+ * @param {Date} date
+ * @param args
+ * @return {string}
+ */
 export const formatDate = (date, ...args) => formatDateParsed(parseDate(date), ...args);
 
 const getDateTime = (item, options, locale) => {
@@ -19,6 +30,13 @@ const getDateTime = (item, options, locale) => {
   return item.time ? `${date}, ${formatDate(item.time, options.timeFormat, { locale })}` : date;
 };
 
+/**
+ * @function
+ * @param {Date[]} dates
+ * @param {object} options
+ * @param {string} locale
+ * @return {string|null|*}
+ */
 export const formatDatesRange = (dates, options = {}, locale) => {
   if (!Array.isArray(dates)) return null;
   const { dateFormat, timeFormat } = options;
