@@ -1,3 +1,9 @@
+/**
+ * Compare two hashes
+ * @param {string} hash1
+ * @param {string} hash2
+ * @return {boolean}
+ */
 export const isSameHash = (hash1, hash2) => (JSON.stringify(hash1) === JSON.stringify(hash2));
 
 export const isSameArray = (source, target, options = {}) => {
