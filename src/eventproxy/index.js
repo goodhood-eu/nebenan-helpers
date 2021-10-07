@@ -101,6 +101,12 @@ const removeListener = (event, id) => {
   detachEmitterHandler(event, eventData, eventSettings);
 };
 
+/**
+ * @function
+ * @param {string} event
+ * @param {function} callback
+ * @return {removeEventListener|noop}
+ */
 const addListener = (event, callback) => {
   if (typeof event !== 'string') throw new Error('Event name required');
   if (typeof callback !== 'function') throw new Error('Listener function required');
