@@ -3,7 +3,7 @@ name: GitHub pages
 on:
   push:
     branches:
-      - feature/CORE-8286-jsdoc
+      - master
 
 jobs:
   deploy:
