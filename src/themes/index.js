@@ -1,8 +1,20 @@
+/**
+ * @function
+ * @param {string} key
+ * @param {string} prefix
+ * @return {string}
+ */
 const stripPrefix = (key, prefix) => {
   const strippedKey = key.substring(prefix.length);
   return strippedKey.charAt(0).toLowerCase() + strippedKey.slice(1);
 };
 
+/**
+ * @function
+ * @param {object} theme
+ * @param {string} prefix
+ * @return {{}}
+ */
 export const getSubTheme = (theme = {}, prefix) => (
   Object.entries(theme)
     .reduce((acc, [key, value]) => {
@@ -14,6 +26,12 @@ export const getSubTheme = (theme = {}, prefix) => (
     }, {})
 );
 
+/**
+ * @function
+ * @param {object} baseTheme
+ * @param {object} otherTheme
+ * @return {{}|*}
+ */
 export const mergeThemes = (baseTheme, otherTheme) => {
   if (!otherTheme) return baseTheme;
 

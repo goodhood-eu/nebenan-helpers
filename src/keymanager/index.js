@@ -28,6 +28,12 @@ const removeListener = (id) => {
   delete listeners[id];
 };
 
+/**
+ * @function
+ * @param {string[]} keyNames
+ * @param {function} callback
+ * @return {function(): void}
+ */
 const addListener = (keyNames, callback) => {
   if (typeof callback !== 'function') throw new Error('Listener function required');
 

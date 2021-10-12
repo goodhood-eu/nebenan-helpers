@@ -11,6 +11,12 @@ const removeListener = (id) => {
   delete listeners[id];
 };
 
+/**
+ * @function
+ * @param {number} interval
+ * @param {function} callback
+ * @return {function(): void}
+ */
 const addListener = (interval, callback) => {
   if (typeof callback !== 'function') throw new Error('Listener function required');
   lastIndex += 1;
