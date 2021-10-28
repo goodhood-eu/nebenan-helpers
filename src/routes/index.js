@@ -7,7 +7,6 @@ const PARAM_TOKEN = /(:\w+)<(\w+)>/g;
 export const validations = {
   id: '\\d+',
   zipCode: '\\d{5}',
-  token: '[\\w-]{20}',
   accessCode: '[\\w]{5}-[\\w]{5}',
   slug: '[\\w-]+',
   stringId: '\\w{6,}',

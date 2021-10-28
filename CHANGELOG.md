@@ -6,3 +6,4 @@
 - `data`: Removed `roundFloat` export, use [`lodash.round(number, precision)`](https://lodash.com/docs/4.17.15#round) instead
 - `data`: Removed `formatQuery` export
 - `formatters`: Remove `capitalizeFirst` export, use [`lodash.upperFirst(string)`](https://lodash.com/docs/4.17.15#upperFirst) instead
+- `routes`: Removed `token` from `validations` export
