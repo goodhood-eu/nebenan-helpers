@@ -30,19 +30,6 @@ describe('routes', () => {
     isInt.forEach((item) => assert.isTrue(getTest(validations.id)(item), `Passed for ${item}`));
     isNotInt.forEach((item) => assert.isFalse(getTest(validations.id)(item), `Failed for ${item}`));
 
-    const isToken = [
-      'a'.repeat(20),
-      'abcSDASD123toikg2345',
-    ];
-
-    const isNotToken = [
-      'a'.repeat(19),
-      'abcS-ASD123toikg2$45',
-    ];
-
-    isToken.forEach((item) => assert.isTrue(getTest(validations.token)(item), `Passed for ${item}`));
-    isNotToken.forEach((item) => assert.isFalse(getTest(validations.token)(item), `Failed for ${item}`));
-
     const isAccessCode = [
       'a123b-zxcZA',
     ];
