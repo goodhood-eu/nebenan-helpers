@@ -1,3 +1,7 @@
+## v7.0.0 Breaking changes
+- functions: `heartbeat`, `keymanager`, `eventproxy` extracted to separate packages
+- dependency, peerDependency updates
+
 ## v6.0.0 Breaking changes
 - `routes`: Removed `token` from `validations` export
 
