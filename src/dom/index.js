@@ -206,19 +206,22 @@ export const scroll = (node) => {
 /**
  * @function isMobileTouchDevice
  * @description Checks if user client is a mobile device
+ * @param {Object} window
  * @returns {boolean}
  */
-export const isMobileTouchDevice = () => {
+export const isMobileTouchDevice = (window) => {
   const touchPoints = ['maxTouchPoints', 'msMaxTouchPoints'];
 
-  const predicate = (touchpoint) => touchpoint in navigator && navigator[touchpoint] > 0;
+  const predicate = (touchpoint) => (
+    touchpoint in window?.navigator && window.navigator[touchpoint] > 0
+  );
   const hasTouchPoints = touchPoints.some(predicate);
   if (!hasTouchPoints) return false;
 
-  const hasPointerDevice = window.matchMedia?.('(pointer:coarse)').matches;
+  const hasPointerDevice = window?.matchMedia?.('(pointer:coarse)').matches;
   if (!hasPointerDevice) return false;
 
   if (!('orientation' in window)) return false;
 
-  return USER_AGENT_REGEX.test(navigator.userAgent);
+  return USER_AGENT_REGEX.test(window?.navigator.userAgent);
 };
