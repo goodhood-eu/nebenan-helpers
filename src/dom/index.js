@@ -4,6 +4,9 @@ const STYLES_PREFIXES = {
   transform: ['Webkit', 'ms'],
 };
 
+const USER_AGENT_REGEX = /(\b(BlackBerry|webOS|iPhone|IEMobile)\b)|(\b(Android|Windows Phone|iPad|iPod)\b)/i;
+
+
 const QUOTE_REGEX = /'/;
 const QUOTE_ESCAPE = escape('\'');
 
@@ -197,4 +200,28 @@ export const scroll = (node) => {
   const unlock = () => node.removeEventListener('touchmove', preventDefault, { passive: false });
 
   return { get, to, lock, unlock };
+};
+
+
+/**
+ * @function isMobileTouchDevice
+ * @description Checks if user client is a mobile device
+ * @param {Object} window
+ * @returns {boolean}
+ */
+export const isMobileTouchDevice = (window) => {
+  const touchPoints = ['maxTouchPoints', 'msMaxTouchPoints'];
+
+  const predicate = (touchpoint) => (
+    touchpoint in window?.navigator && window.navigator[touchpoint] > 0
+  );
+  const hasTouchPoints = touchPoints.some(predicate);
+  if (!hasTouchPoints) return false;
+
+  const hasPointerDevice = window?.matchMedia?.('(pointer:coarse)').matches;
+  if (!hasPointerDevice) return false;
+
+  if (!('orientation' in window)) return false;
+
+  return USER_AGENT_REGEX.test(window?.navigator.userAgent);
 };
