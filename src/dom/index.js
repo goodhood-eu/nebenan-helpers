@@ -212,9 +212,8 @@ export const scroll = (node) => {
 export const isMobileTouchDevice = (window) => {
   const touchPoints = ['maxTouchPoints', 'msMaxTouchPoints'];
 
-  const predicate = (touchpoint) => (
-    touchpoint in window?.navigator && window.navigator[touchpoint] > 0
-  );
+  const predicate = (touchpoint) => (window && touchpoint in window.navigator
+    && window.navigator[touchpoint] > 0);
   const hasTouchPoints = touchPoints.some(predicate);
   if (!hasTouchPoints) return false;
 
