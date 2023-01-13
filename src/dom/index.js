@@ -1,4 +1,4 @@
-import { upperFirst } from 'lodash';
+import upperFirst from 'lodash/upperFirst';
 
 const STYLES_PREFIXES = {
   transform: ['Webkit', 'ms'],
