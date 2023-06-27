@@ -1,12 +1,11 @@
 {
   "name": "nebenan-helpers",
-  "description": "React ui component helpers",
+  "description": "helper functions",
   "author": "Nebenan.de <max@nebenan.de>",
-  "license": "SEE LICENSE IN LICENSE FILE",
-  "readmeFilename": "README.md",
-  "homepage": "https://nebenan.de/",
-  "repository": "good-hood-gmbh/nebenan-helpers",
-  "bugs": "https://github.com/good-hood-gmbh/nebenan-helpers/issues",
+  "license": "MIT",
+  "homepage": "https://github.com/goodhood-eu/nebenan-helpers#readme",
+  "repository": "github:goodhood-eu/nebenan-helpers",
+  "bugs": "https://github.com/goodhood-eu/nebenan-helpers/issues",
   "version": "7.0.0",
   "files": [
     "lib/*.js",
