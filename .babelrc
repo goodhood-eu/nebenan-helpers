@@ -4,6 +4,7 @@
   ],
   "plugins": [
     ["add-module-exports", { "addDefaultProperty": true }],
+    "@babel/plugin-transform-runtime",
     "@babel/plugin-transform-strict-mode"
   ]
 }
