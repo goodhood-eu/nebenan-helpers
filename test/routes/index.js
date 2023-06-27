@@ -1,4 +1,5 @@
 const { assert } = require('chai');
+const { routes } = require('../../lib/index');
 
 const {
   validations,
@@ -11,8 +12,7 @@ const {
   setReferrer,
 
   stripOriginFromUrl,
-} = require('../../lib/routes');
-
+} = routes;
 
 describe('routes', () => {
   it('validations', () => {

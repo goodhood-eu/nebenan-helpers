@@ -1,4 +1,5 @@
 const { assert } = require('chai');
+const { data } = require('../../lib/index');
 
 const {
   isSameHash,
@@ -14,7 +15,7 @@ const {
   concatItems,
   arrayOf,
   ceilToFixed,
-} = require('../../lib/data');
+} = data;
 
 
 describe('data', () => {

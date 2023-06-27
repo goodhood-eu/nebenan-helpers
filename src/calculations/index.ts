@@ -1,5 +1,3 @@
-import { getRadian } from './utils';
-
 const EARTH_RADIUS = 6371; // km
 
 /**
@@ -7,7 +5,7 @@ const EARTH_RADIUS = 6371; // km
  * @function
  * @return {string} Generated ID (4 symbols)
  */
-export const getID = () => (
+export const getID = ():string => (
   Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
 );
 
@@ -16,7 +14,7 @@ export const getID = () => (
  * @function
  * @return {string} Generated UUID string
  */
-export const getUID = () => (
+export const getUID = ():string => (
   [
     getID(),
     getID(),
@@ -34,6 +32,13 @@ export const getUID = () => (
 );
 
 /**
+ * @function
+ * @param {number} degrees
+ * @return {number} radian
+ */
+export const getRadian = (degrees:number):number => (degrees * (Math.PI / 180));
+
+/**
  * Haversine formula
  * @function
  * @param {number} lat1 Latitude coordinate 1
@@ -42,7 +47,7 @@ export const getUID = () => (
  * @param {number} lon2 Longitude coordinate 1
  * @return {number}
  */
-export const getDistance = (lat1, lon1, lat2, lon2) => {
+export const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number):number => {
   const dLat = getRadian(lat2 - lat1);
   const dLon = getRadian(lon2 - lon1);
 

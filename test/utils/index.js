@@ -1,14 +1,15 @@
 const { assert } = require('chai');
 const sinon = require('sinon');
 
+const { utils } = require('../../lib/index');
+
 const {
   isPathActive,
   escapeFileName,
   invoke,
   invokeOn,
   bindTo,
-} = require('../../lib/utils');
-
+} = utils;
 
 describe('utils', () => {
   it('isPathActive', () => {

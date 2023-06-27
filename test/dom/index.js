@@ -1,5 +1,8 @@
 const { assert } = require('chai');
 const sinon = require('sinon');
+
+const { dom } = require('../../lib/index');
+
 const {
   getPrefixed,
   media,
@@ -16,7 +19,7 @@ const {
   eventCoordinates,
   escapeDomUrl,
   scroll,
-} = require('../../lib/dom');
+} = dom;
 
 
 describe('dom', () => {

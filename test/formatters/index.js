@@ -1,5 +1,7 @@
 const { assert } = require('chai');
-const utils = require('../../lib/formatters');
+const { formatters } = require('../../lib/index');
+
+const utils = formatters;
 
 const dateFormat = 'MM/dd/yyyy';
 const timeFormat = 'H:mm a';

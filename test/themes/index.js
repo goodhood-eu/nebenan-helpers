@@ -1,8 +1,10 @@
 const { assert } = require('chai');
+const { themes } = require('../../lib/index');
+
 const {
   mergeThemes,
   getSubTheme,
-} = require('../../lib/themes');
+} = themes;
 
 describe('themes', () => {
   describe('mergeThemes', () => {
