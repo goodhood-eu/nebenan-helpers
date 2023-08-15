@@ -1,6 +1,3 @@
-## v8.0.0 Breaking changes
-- use node 18
-
 ## v7.0.0 Breaking changes
 - functions: `heartbeat`, `keymanager`, `eventproxy` extracted to separate packages
 - dependency, peerDependency updates
