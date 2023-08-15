@@ -6,7 +6,7 @@
   "homepage": "https://github.com/goodhood-eu/nebenan-helpers#readme",
   "repository": "github:goodhood-eu/nebenan-helpers",
   "bugs": "https://github.com/goodhood-eu/nebenan-helpers/issues",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "files": [
     "lib/*.js",
     "lib/*/*.js"
