@@ -1,6 +1,5 @@
 const { assert } = require('chai');
 const sinon = require('sinon');
-
 const { utils } = require('../../lib/index');
 
 const {
