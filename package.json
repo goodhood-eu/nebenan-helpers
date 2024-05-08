@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "qs": "^6.12.1"
   },
   "peerDependencies": {
