@@ -1,3 +1,6 @@
+## v8.0.0 Breaking changes
+- support for node20 and date-fns v3 added
+
 ## v7.0.0 Breaking changes
 - functions: `heartbeat`, `keymanager`, `eventproxy` extracted to separate packages
 - dependency, peerDependency updates
