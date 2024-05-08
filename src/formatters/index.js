@@ -1,5 +1,4 @@
-import formatDateParsed from 'date-fns/format';
-import parseDate from 'date-fns/parseISO';
+import { format, parseISO } from 'date-fns';
 
 /**
  * @function
@@ -23,7 +22,7 @@ export const formatNumber = (number, digits = 2) => {
  * @param args
  * @return {string}
  */
-export const formatDate = (date, ...args) => formatDateParsed(parseDate(date), ...args);
+export const formatDate = (date, ...args) => format(parseISO(date), ...args);
 
 const getDateTime = (item, options, locale) => {
   const date = formatDate(item.date, options.dateFormat, { locale });
